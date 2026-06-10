@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Secure Checkout - ShopHub')
+@section('title', 'Secure Checkout - Shopee')
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -17,7 +17,7 @@
                     <!-- Section 1: Shipping Details -->
                     <div class="space-y-5">
                         <h3 class="font-extrabold text-slate-800 text-lg border-b border-slate-100 pb-3">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 text-xs font-black mr-2">1</span>
+                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-650 text-xs font-black mr-2">1</span>
                             Shipping Information
                         </h3>
 
@@ -25,25 +25,25 @@
                             <div class="sm:col-span-2">
                                 <label for="shipping_address" class="block text-xs font-bold uppercase text-slate-400 mb-2">Street Address</label>
                                 <input type="text" id="shipping_address" name="shipping_address" value="{{ old('shipping_address') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 text-sm focus:outline-none placeholder-slate-350"
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
                                     placeholder="House number, Street name, Apartment, etc.">
                             </div>
                             <div>
                                 <label for="shipping_city" class="block text-xs font-bold uppercase text-slate-400 mb-2">City</label>
                                 <input type="text" id="shipping_city" name="shipping_city" value="{{ old('shipping_city') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 text-sm focus:outline-none placeholder-slate-350"
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
                                     placeholder="e.g. Dhaka, Chittagong">
                             </div>
                             <div>
                                 <label for="shipping_zip" class="block text-xs font-bold uppercase text-slate-400 mb-2">ZIP / Postal Code</label>
                                 <input type="text" id="shipping_zip" name="shipping_zip" value="{{ old('shipping_zip') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 text-sm focus:outline-none placeholder-slate-350"
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
                                     placeholder="e.g. 1207">
                             </div>
                             <div class="sm:col-span-2">
                                 <label for="shipping_phone" class="block text-xs font-bold uppercase text-slate-400 mb-2">Phone Number</label>
                                 <input type="text" id="shipping_phone" name="shipping_phone" value="{{ old('shipping_phone') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 text-sm focus:outline-none placeholder-slate-350"
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
                                     placeholder="e.g. +88017XXXXXXXX">
                             </div>
                         </div>
@@ -52,23 +52,23 @@
                     <!-- Section 2: Payment Methods (Manual verification) -->
                     <div class="space-y-5">
                         <h3 class="font-extrabold text-slate-800 text-lg border-b border-slate-100 pb-3">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 text-xs font-black mr-2">2</span>
+                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-650 text-xs font-black mr-2">2</span>
                             Select Payment Method
                         </h3>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             <!-- Cash on Delivery -->
                             <label class="relative flex flex-col p-5 bg-slate-50 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-100/50 transition"
-                                :class="paymentMethod === 'cod' ? 'ring-2 ring-indigo-600 bg-indigo-50/10 border-transparent' : ''">
+                                :class="paymentMethod === 'cod' ? 'ring-2 ring-emerald-600 bg-emerald-50/10 border-transparent' : ''">
                                 <input type="radio" name="payment_method" value="cod" class="sr-only" @click="paymentMethod = 'cod'" checked>
-                                <i class="fas fa-hand-holding-dollar text-slate-400 text-xl mb-3" :class="paymentMethod === 'cod' ? 'text-indigo-600' : ''"></i>
+                                <i class="fas fa-hand-holding-dollar text-slate-400 text-xl mb-3" :class="paymentMethod === 'cod' ? 'text-emerald-600' : ''"></i>
                                 <span class="font-bold text-slate-800 text-sm">Cash on Delivery</span>
                                 <span class="text-[10px] text-slate-400 mt-1 leading-snug">Pay at your doorstep upon receiving package.</span>
                             </label>
 
                             <!-- bKash -->
                             <label class="relative flex flex-col p-5 bg-slate-50 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-100/50 transition"
-                                :class="paymentMethod === 'bkash' ? 'ring-2 ring-indigo-600 bg-indigo-50/10 border-transparent' : ''">
+                                :class="paymentMethod === 'bkash' ? 'ring-2 ring-orange-500 bg-orange-50/10 border-transparent' : ''">
                                 <input type="radio" name="payment_method" value="bkash" class="sr-only" @click="paymentMethod = 'bkash'">
                                 <i class="fas fa-mobile-screen text-slate-400 text-xl mb-3" :class="paymentMethod === 'bkash' ? 'text-pink-500' : ''"></i>
                                 <span class="font-bold text-slate-800 text-sm">bKash (Mobile)</span>
@@ -77,7 +77,7 @@
 
                             <!-- Nagad -->
                             <label class="relative flex flex-col p-5 bg-slate-50 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-100/50 transition"
-                                :class="paymentMethod === 'nagad' ? 'ring-2 ring-indigo-600 bg-indigo-50/10 border-transparent' : ''">
+                                :class="paymentMethod === 'nagad' ? 'ring-2 ring-orange-500 bg-orange-50/10 border-transparent' : ''">
                                 <input type="radio" name="payment_method" value="nagad" class="sr-only" @click="paymentMethod = 'nagad'">
                                 <i class="fas fa-mobile-screen text-slate-400 text-xl mb-3" :class="paymentMethod === 'nagad' ? 'text-orange-500' : ''"></i>
                                 <span class="font-bold text-slate-800 text-sm">Nagad (Mobile)</span>
@@ -86,7 +86,7 @@
 
                             <!-- Rocket -->
                             <label class="relative flex flex-col p-5 bg-slate-50 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-100/50 transition"
-                                :class="paymentMethod === 'rocket' ? 'ring-2 ring-indigo-600 bg-indigo-50/10 border-transparent' : ''">
+                                :class="paymentMethod === 'rocket' ? 'ring-2 ring-orange-500 bg-orange-50/10 border-transparent' : ''">
                                 <input type="radio" name="payment_method" value="rocket" class="sr-only" @click="paymentMethod = 'rocket'">
                                 <i class="fas fa-mobile-screen text-slate-400 text-xl mb-3" :class="paymentMethod === 'rocket' ? 'text-purple-500' : ''"></i>
                                 <span class="font-bold text-slate-800 text-sm">Rocket (Mobile)</span>
@@ -95,9 +95,9 @@
 
                             <!-- Bank Transfer -->
                             <label class="relative flex flex-col p-5 bg-slate-50 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-100/50 transition"
-                                :class="paymentMethod === 'bank_transfer' ? 'ring-2 ring-indigo-600 bg-indigo-50/10 border-transparent' : ''">
+                                :class="paymentMethod === 'bank_transfer' ? 'ring-2 ring-emerald-600 bg-emerald-50/10 border-transparent' : ''">
                                 <input type="radio" name="payment_method" value="bank_transfer" class="sr-only" @click="paymentMethod = 'bank_transfer'">
-                                <i class="fas fa-building-columns text-slate-400 text-xl mb-3" :class="paymentMethod === 'bank_transfer' ? 'text-blue-600' : ''"></i>
+                                <i class="fas fa-building-columns text-slate-400 text-xl mb-3" :class="paymentMethod === 'bank_transfer' ? 'text-emerald-600' : ''"></i>
                                 <span class="font-bold text-slate-800 text-sm">Bank Wire Transfer</span>
                                 <span class="text-[10px] text-slate-400 mt-1 leading-snug">Direct Bank deposit or online wire transfer.</span>
                             </label>
@@ -112,7 +112,7 @@
                                 <template x-if="['bkash', 'nagad', 'rocket'].includes(paymentMethod)">
                                     <div class="text-xs text-slate-500 leading-normal space-y-1">
                                         <p>1. Open your Mobile Wallet and navigate to Send Money / Merchant Pay.</p>
-                                        <p>2. Send the exact grand total amount <span class="font-bold text-slate-800">${{ number_format($total, 2) }}</span> to our Wallet Number: <span class="font-bold text-indigo-600">+8801777777777</span>.</p>
+                                        <p>2. Send the exact grand total amount <span class="font-bold text-slate-800">${{ number_format($total, 2) }}</span> to our Wallet Number: <span class="font-bold text-emerald-650">+8801777777777</span>.</p>
                                         <p>3. Input your Transaction details below once the transaction completes successfully.</p>
                                     </div>
                                 </template>
@@ -122,7 +122,7 @@
                                     <div class="text-xs text-slate-500 leading-normal space-y-1">
                                         <p>1. Transfer the exact amount <span class="font-bold text-slate-800">${{ number_format($total, 2) }}</span> to our Bank Account:</p>
                                         <p class="pl-4 font-bold text-slate-700">Bank Name: Demo Premium Bank Ltd</p>
-                                        <p class="pl-4 font-bold text-slate-700">Account Name: ShopHub Ltd</p>
+                                        <p class="pl-4 font-bold text-slate-700">Account Name: Shopee Ltd</p>
                                         <p class="pl-4 font-bold text-slate-700">Account Number: 1234-5678-9012</p>
                                         <p class="pl-4 font-bold text-slate-700">Routing Number: 999888777</p>
                                         <p>2. Save the deposit receipt or reference ID and enter the details below.</p>
@@ -135,14 +135,14 @@
                                     <label for="payment_sender" class="block text-xs font-bold uppercase text-slate-400 mb-2">Sender Phone / Account</label>
                                     <input type="text" id="payment_sender" name="payment_sender" value="{{ old('payment_sender') }}" 
                                         ::required="paymentMethod !== 'cod'"
-                                        class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 text-sm focus:outline-none"
+                                        class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none"
                                         placeholder="e.g. +88017XXXXXXXX / Account No">
                                 </div>
                                 <div>
                                     <label for="transaction_id" class="block text-xs font-bold uppercase text-slate-400 mb-2">Transaction ID (TxnID) / Ref</label>
                                     <input type="text" id="transaction_id" name="transaction_id" value="{{ old('transaction_id') }}" 
                                         ::required="paymentMethod !== 'cod'"
-                                        class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 text-sm focus:outline-none"
+                                        class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none"
                                         placeholder="e.g. TRx8291079">
                                 </div>
                             </div>
@@ -192,7 +192,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-xl shadow-indigo-150 transition transform hover:-translate-y-0.5 flex items-center justify-center">
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-emerald-600 to-orange-500 hover:from-emerald-700 hover:to-orange-600 text-white font-bold rounded-2xl shadow-xl shadow-emerald-500/10 transition transform hover:-translate-y-0.5 flex items-center justify-center">
                         <i class="fas fa-lock mr-2 text-xs"></i> Complete Order
                     </button>
                     <a href="{{ route('cart.index') }}" class="w-full py-4 bg-white border border-slate-200 text-slate-700 font-bold rounded-2xl transition flex items-center justify-center hover:bg-slate-50">

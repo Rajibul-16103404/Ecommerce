@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manage Vendors - ShopHub')
+@section('title', 'Manage Vendors - Shopee')
 @section('page_title', 'Verify Vendors')
 
 @section('content')
@@ -75,7 +75,7 @@
                                                 <button type="submit" 
                                                     class="px-3 py-1.5 rounded-lg font-bold text-[10px] border transition"
                                                     class="toggle-button"
-                                                    style="background-color: {{ $profile->is_verified ? '#991b1b' : '#312e81' }}; border-color: {{ $profile->is_verified ? '#991b1b' : '#312e81' }}; color: #ffffff;">
+                                                    style="background-color: {{ $profile->is_verified ? '#991b1b' : '#059669' }}; border-color: {{ $profile->is_verified ? '#991b1b' : '#059669' }}; color: #ffffff;">
                                                     {{ $profile->is_verified ? 'Unverify' : 'Verify Shop' }}
                                                 </button>
                                             </form>

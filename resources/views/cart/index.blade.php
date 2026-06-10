@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Your Shopping Cart - ShopHub')
+@section('title', 'Your Shopping Cart - Shopee')
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -13,7 +13,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-slate-800">Your cart is currently empty</h3>
                 <p class="text-slate-400 text-sm mt-2 max-w-md mx-auto">Fill it with high-quality clothing, gadgets, cosmetics, and groceries from our premium collections.</p>
-                <a href="{{ route('products.index') }}" class="mt-6 px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl text-sm transition shadow-lg shadow-indigo-100 inline-block">
+                <a href="{{ route('products.index') }}" class="mt-6 px-8 py-3.5 bg-emerald-650 hover:bg-emerald-750 text-white font-bold rounded-2xl text-sm transition shadow-lg shadow-emerald-50/50 inline-block">
                     Start Shopping
                 </a>
             </div>
@@ -43,7 +43,7 @@
                                         @endif
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="font-bold text-slate-800 text-sm line-clamp-2 hover:text-indigo-600 transition">
+                                        <h3 class="font-bold text-slate-800 text-sm line-clamp-2 hover:text-emerald-600 transition">
                                             <a href="{{ route('products.show', $item->product->slug) }}">{{ $item->product->name }}</a>
                                         </h3>
                                         <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">{{ $item->product->category->name }}</p>
@@ -80,7 +80,7 @@
                                 <!-- Total Item Price -->
                                 <div class="col-span-4 sm:col-span-2 text-right">
                                     <span class="sm:hidden text-xs text-slate-400 font-bold uppercase block">Total</span>
-                                    <span class="font-bold text-indigo-650 text-base">${{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
+                                    <span class="font-bold text-emerald-650 text-base">${{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
                                 </div>
 
                             </div>
@@ -108,19 +108,19 @@
                             </span>
                         </div>
                         @if($shipping > 0)
-                            <div class="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100/50 text-xs text-indigo-700 leading-normal">
-                                <i class="fas fa-circle-info mr-1.5"></i> Add <span class="font-bold">${{ number_format(50 - $subtotal, 2) }}</span> more to unlock <span class="font-bold">FREE SHIPPING</span>!
+                            <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100/50 text-xs text-emerald-700 leading-normal">
+                                <i class="fas fa-circle-info mr-1.5 text-emerald-600"></i> Add <span class="font-bold">${{ number_format(50 - $subtotal, 2) }}</span> more to unlock <span class="font-bold">FREE SHIPPING</span>!
                             </div>
                         @endif
                         <hr class="border-slate-100">
                         <div class="flex justify-between text-base font-bold text-slate-900">
                             <span>Estimated Total</span>
-                            <span>${{ number_format($total, 2) }}</span>
+                            <span class="text-emerald-600">${{ number_format($total, 2) }}</span>
                         </div>
                     </div>
 
                     <div class="pt-2">
-                        <a href="{{ route('checkout') }}" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-500/10 transition transform hover:-translate-y-0.5 flex items-center justify-center">
+                        <a href="{{ route('checkout') }}" class="w-full py-4 bg-gradient-to-r from-emerald-600 to-orange-500 hover:from-emerald-700 hover:to-orange-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/10 transition transform hover:-translate-y-0.5 flex items-center justify-center">
                             Proceed to Checkout <i class="fas fa-credit-card ml-2 text-xs"></i>
                         </a>
                     </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Order ' . $order->order_number . ' - ShopHub')
+@section('title', 'Order ' . $order->order_number . ' - Shopee')
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -8,7 +8,7 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
-                <a href="{{ route('orders.index') }}" class="text-xs font-bold text-indigo-650 hover:text-indigo-750 transition flex items-center mb-2">
+                <a href="{{ route('orders.index') }}" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 transition flex items-center mb-2">
                     <i class="fas fa-arrow-left mr-2"></i> Back to Orders
                 </a>
                 <h1 class="text-3xl font-black text-slate-900 tracking-tight flex items-center">
@@ -53,10 +53,10 @@
                         <div class="w-14 h-14 rounded-full flex items-center justify-center border shadow-sm transition duration-300"
                             class="active"
                             :class=""
-                            style="background-color: {{ $stage['active'] ? '#4f46e5' : '#f8fafc' }}; border-color: {{ $stage['active'] ? '#4f46e5' : '#e2e8f0' }}; color: {{ $stage['active'] ? '#ffffff' : '#94a3b8' }};">
+                            style="background-color: {{ $stage['active'] ? '#10b981' : '#f8fafc' }}; border-color: {{ $stage['active'] ? '#10b981' : '#e2e8f0' }}; color: {{ $stage['active'] ? '#ffffff' : '#94a3b8' }};">
                             <i class="fas {{ $stage['icon'] }} text-lg"></i>
                         </div>
-                        <span class="text-xs font-bold mt-3" style="color: {{ $stage['active'] ? '#1e293b' : '#94a3b8' }}">{{ $stage['name'] }}</span>
+                        <span class="text-xs font-bold mt-3" style="color: {{ $stage['active'] ? '#10b981' : '#94a3b8' }}">{{ $stage['name'] }}</span>
                     </div>
                 @endforeach
             </div>
@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h4 class="font-bold text-slate-800 text-sm line-clamp-1">
-                                            <a href="{{ route('products.show', $item->product->slug) }}" class="hover:text-indigo-650 transition">{{ $item->product->name }}</a>
+                                            <a href="{{ route('products.show', $item->product->slug) }}" class="hover:text-emerald-600 transition">{{ $item->product->name }}</a>
                                         </h4>
                                         <p class="text-xs text-slate-400 mt-1">
                                             <span>Unit Price: ${{ number_format($item->price, 2) }}</span>

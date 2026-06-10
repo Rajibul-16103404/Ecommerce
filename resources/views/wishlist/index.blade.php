@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Your Wishlist - ShopHub')
+@section('title', 'Your Wishlist - Shopee')
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -13,7 +13,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-slate-800">Your wishlist is empty</h3>
                 <p class="text-slate-400 text-sm mt-2 max-w-md mx-auto">Click the heart button on product cards to store items you plan to buy later.</p>
-                <a href="{{ route('products.index') }}" class="mt-6 px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl text-sm transition shadow-lg inline-block">
+                <a href="{{ route('products.index') }}" class="mt-6 px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-orange-500 hover:from-emerald-700 hover:to-orange-600 text-white font-bold rounded-2xl text-sm transition shadow-lg inline-block">
                     Explore Products
                 </a>
             </div>
@@ -31,7 +31,7 @@
                             @method('DELETE')
                             <button type="submit" class="w-8 h-8 rounded-full bg-white hover:bg-rose-50 text-slate-400 hover:text-rose-500 shadow-md flex items-center justify-center transition">
                                 <i class="fas fa-times text-xs"></i>
-                            </button>
+                              </button>
                         </form>
 
                         <div>
@@ -44,7 +44,7 @@
                                 @endif
                                 
                                 @if($product->discount_price)
-                                    <span class="absolute top-4 left-4 bg-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+                                    <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
                                         -{{ $product->discount_percentage }}%
                                     </span>
                                 @endif
@@ -53,12 +53,12 @@
                             <!-- Info -->
                             <div class="p-5">
                                 <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{{ $product->category->name }}</span>
-                                <h3 class="font-bold text-slate-800 text-sm mt-0.5 line-clamp-1 group-hover:text-indigo-600 transition">
+                                <h3 class="font-bold text-slate-800 text-sm mt-0.5 line-clamp-1 group-hover:text-emerald-600 transition">
                                     <a href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
                                 </h3>
 
                                 <div class="flex items-baseline space-x-2 mt-3">
-                                    <span class="text-lg font-extrabold text-indigo-600">${{ number_format($product->discounted_price, 2) }}</span>
+                                    <span class="text-lg font-extrabold text-emerald-600">${{ number_format($product->discounted_price, 2) }}</span>
                                     @if ($product->discount_price)
                                         <span class="text-xs text-slate-400 line-through">${{ number_format($product->price, 2) }}</span>
                                     @endif
@@ -73,7 +73,7 @@
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="w-full py-2.5 bg-slate-900 hover:bg-indigo-600 text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5">
+                                    <button type="submit" class="w-full py-2.5 bg-slate-900 hover:bg-emerald-650 text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5">
                                         <i class="fas fa-shopping-cart text-[10px]"></i> Add to Cart
                                     </button>
                                 </form>

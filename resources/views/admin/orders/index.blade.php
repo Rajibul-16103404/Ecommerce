@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manage Orders - ShopHub')
+@section('title', 'Manage Orders - Shopee')
 @section('page_title', 'Verify Orders')
 
 @section('content')
@@ -81,7 +81,7 @@
                                     
                                     <!-- Actions -->
                                     <td class="py-4 text-right">
-                                        <a href="{{ route('admin.orders.show', $order->id) }}" class="px-2.5 py-1 bg-slate-900 border border-slate-800 text-indigo-400 hover:border-indigo-500 hover:text-white rounded-lg font-bold transition">
+                                        <a href="{{ route('admin.orders.show', $order->id) }}" class="px-2.5 py-1 bg-slate-900 border border-slate-800 text-emerald-400 hover:border-emerald-500 hover:text-white rounded-lg font-bold transition">
                                             Review details
                                         </a>
                                     </td>

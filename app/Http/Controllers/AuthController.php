@@ -65,7 +65,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('home')->with('success', 'Account created successfully! Welcome to ShopHub.');
+        return redirect()->route('home')->with('success', 'Account created successfully! Welcome to Shopee.');
     }
 
     public function logout(Request $request)
@@ -76,6 +76,49 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')->with('success', 'Logged out successfully.');
+    }
+
+    public function showAdminLogin()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->isAdmin()) {
+                return redirect()->route('admin.dashboard');
+            }
+            return redirect()->route('home')->with('error', 'Customers cannot access the administrator portal.');
+        }
+
+        return view('auth.admin-login');
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $user = Auth::user();
+
+            if ($user->isAdmin()) {
+                $request->session()->regenerate();
+                return redirect()->intended(route('admin.dashboard'))->with('success', 'Logged in to Admin Panel successfully!');
+            }
+
+            // Not an admin: log them out immediately
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return back()->withErrors([
+                'email' => 'These credentials do not match our administrator records.',
+            ])->onlyInput('email');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     private function redirectBasedOnRole(User $user)

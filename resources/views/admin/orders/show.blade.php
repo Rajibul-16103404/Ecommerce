@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Verify Order ' . $order->order_number . ' - ShopHub')
+@section('title', 'Verify Order ' . $order->order_number . ' - Shopee')
 @section('page_title', 'Review Order')
 
 @section('content')
@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-800">
             <div>
-                <a href="{{ route('admin.orders.index') }}" class="text-xs font-bold text-indigo-400 hover:underline flex items-center mb-2">
+                <a href="{{ route('admin.orders.index') }}" class="text-xs font-bold text-emerald-400 hover:underline flex items-center mb-2">
                     <i class="fas fa-arrow-left mr-1.5"></i> Back to Orders
                 </a>
                 <h1 class="text-2xl font-black text-white tracking-tight">Reviewing Order: <span class="font-mono text-slate-500 font-medium">{{ $order->order_number }}</span></h1>
@@ -27,9 +27,9 @@
                 
                 <!-- Manual payment verification card -->
                 @if($order->payment_method !== 'cod')
-                    <div class="bg-indigo-950/40 border border-indigo-900/40 rounded-3xl p-6 sm:p-8 space-y-4 shadow-sm">
-                        <h3 class="font-extrabold text-indigo-400 text-base flex items-center">
-                            <i class="fas fa-credit-card mr-2 text-sm"></i> Manual Payment Verification
+                    <div class="bg-emerald-950/20 border border-emerald-900/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-sm">
+                        <h3 class="font-extrabold text-emerald-400 text-base flex items-center">
+                            <i class="fas fa-credit-card mr-2 text-sm text-orange-500"></i> Manual Payment Verification
                         </h3>
                         <p class="text-xs text-slate-400">Verify this transaction by cross-referencing your mobile banking wallet or bank statement using the reference codes below.</p>
                         
@@ -44,7 +44,7 @@
                             </div>
                             <div class="p-4 bg-slate-900 border border-slate-850 rounded-2xl">
                                 <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wide">Transaction ID (TxnID)</span>
-                                <span class="font-bold text-indigo-400 text-sm mt-0.5 block font-mono select-all">{{ $order->transaction_id ?: 'N/A' }}</span>
+                                <span class="font-bold text-orange-500 text-sm mt-0.5 block font-mono select-all">{{ $order->transaction_id ?: 'N/A' }}</span>
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                         <hr class="border-slate-850">
                         <div class="flex justify-between text-sm font-bold text-white">
                             <span>Grand Total</span>
-                            <span class="text-indigo-400">${{ number_format($order->total_price, 2) }}</span>
+                            <span class="text-emerald-400">${{ number_format($order->total_price, 2) }}</span>
                         </div>
                     </div>
                 </div>
@@ -119,13 +119,13 @@
                         <label for="payment_status" class="block text-[10px] font-bold uppercase text-slate-500">Payment Verification</label>
                         <div class="flex gap-2">
                             <select id="payment_status" name="payment_status" 
-                                class="flex-1 px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg focus:border-indigo-500 text-xs focus:outline-none text-slate-100">
+                                class="flex-1 px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg focus:border-emerald-500 text-xs focus:outline-none text-slate-100">
                                 <option value="pending" @selected($order->payment_status === 'pending')>Pending</option>
                                 <option value="pending_verification" @selected($order->payment_status === 'pending_verification')>Pending Verification</option>
                                 <option value="paid" @selected($order->payment_status === 'paid')>Verified / Paid</option>
                                 <option value="failed" @selected($order->payment_status === 'failed')>Failed / Declined</option>
                             </select>
-                            <button type="submit" class="px-4 py-2 bg-indigo-650 hover:bg-indigo-750 text-white font-bold text-xs rounded-lg transition">Save</button>
+                            <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition">Save</button>
                         </div>
                     </form>
 
@@ -136,14 +136,14 @@
                         <label for="status" class="block text-[10px] font-bold uppercase text-slate-500">Delivery Status</label>
                         <div class="flex gap-2">
                             <select id="status" name="status" 
-                                class="flex-1 px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg focus:border-indigo-500 text-xs focus:outline-none text-slate-100">
+                                class="flex-1 px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg focus:border-emerald-500 text-xs focus:outline-none text-slate-100">
                                 <option value="pending" @selected($order->status === 'pending')>Pending</option>
                                 <option value="processing" @selected($order->status === 'processing')>Processing</option>
                                 <option value="shipped" @selected($order->status === 'shipped')>Shipped</option>
                                 <option value="delivered" @selected($order->status === 'delivered')>Delivered</option>
                                 <option value="cancelled" @selected($order->status === 'cancelled')>Cancelled</option>
                             </select>
-                            <button type="submit" class="px-4 py-2 bg-indigo-650 hover:bg-indigo-750 text-white font-bold text-xs rounded-lg transition">Save</button>
+                            <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition">Save</button>
                         </div>
                     </form>
                 </div>

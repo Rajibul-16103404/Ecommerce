@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'My Purchase Orders - ShopHub')
+@section('title', 'My Purchase Orders - Shopee')
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -13,7 +13,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-slate-800">No Orders Placed Yet</h3>
                 <p class="text-slate-400 text-sm mt-2 max-w-md mx-auto">You haven't made any purchases yet. Start browsing products to place your first order.</p>
-                <a href="{{ route('products.index') }}" class="mt-6 px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl text-sm transition inline-block">
+                <a href="{{ route('products.index') }}" class="mt-6 px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-orange-500 hover:from-emerald-700 hover:to-orange-600 text-white font-bold rounded-2xl text-sm transition inline-block">
                     Explore Shop
                 </a>
             </div>
@@ -80,7 +80,7 @@
                                     
                                     <!-- Action -->
                                     <td class="py-5 text-right">
-                                        <a href="{{ route('orders.show', $order->id) }}" class="px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-xs font-bold rounded-lg transition inline-block">
+                                        <a href="{{ route('orders.show', $order->id) }}" class="px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 text-xs font-bold rounded-lg transition inline-block">
                                             View Details
                                         </a>
                                     </td>

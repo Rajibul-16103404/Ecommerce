@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'ShopHub - Premium E-Commerce')</title>
+    <title>@yield('title', 'Shopee - Premium E-Commerce')</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,19 +34,17 @@
                     
                     <!-- Logo & Brand -->
                     <a href="{{ route('home') }}" class="flex items-center group">
-                        <div class="relative flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg shadow-indigo-200 transform group-hover:rotate-12 transition duration-300">
-                            <i class="fas fa-shopping-bag text-xl"></i>
-                        </div>
-                        <span class="ml-3 text-2xl font-extrabold bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 bg-clip-text text-transparent tracking-tight">
-                            ShopHub
+                        <img src="{{ asset('images/logo.png') }}" alt="Shopee Logo" class="w-12 h-12 rounded-2xl shadow-lg shadow-emerald-900/10 transform group-hover:rotate-12 transition duration-300 object-cover">
+                        <span class="ml-3 text-2xl font-extrabold bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 bg-clip-text text-transparent tracking-tight">
+                            Shopee
                         </span>
                     </a>
 
                     <!-- Navigation Links (Desktop) -->
                     <div class="hidden md:flex items-center space-x-8">
-                        <a href="{{ route('home') }}" class="font-medium text-slate-600 hover:text-indigo-600 transition {{ request()->routeIs('home') ? 'text-indigo-600' : '' }}">Home</a>
-                        <a href="{{ route('categories.index') }}" class="font-medium text-slate-600 hover:text-indigo-600 transition {{ request()->routeIs('categories.*') ? 'text-indigo-600' : '' }}">Categories</a>
-                        <a href="{{ route('products.index') }}" class="font-medium text-slate-600 hover:text-indigo-600 transition {{ request()->routeIs('products.*') ? 'text-indigo-600' : '' }}">Products</a>
+                        <a href="{{ route('home') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition {{ request()->routeIs('home') ? 'text-emerald-600' : '' }}">Home</a>
+                        <a href="{{ route('categories.index') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition {{ request()->routeIs('categories.*') ? 'text-emerald-600' : '' }}">Categories</a>
+                        <a href="{{ route('products.index') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition {{ request()->routeIs('products.*') ? 'text-emerald-600' : '' }}">Products</a>
                     </div>
 
                     <!-- Actions Panel -->
@@ -54,28 +53,28 @@
                         <div class="relative hidden lg:block w-64">
                             <form action="{{ route('products.index') }}" method="GET">
                                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
-                                    class="w-full pl-10 pr-4 py-2 bg-slate-100/80 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 transition text-sm focus:outline-none">
-                                <button type="submit" class="absolute left-3 top-2.5 text-slate-400 hover:text-indigo-600">
+                                    class="w-full pl-10 pr-4 py-2 bg-slate-100/85 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition text-sm focus:outline-none">
+                                <button type="submit" class="absolute left-3 top-2.5 text-slate-400 hover:text-emerald-600">
                                     <i class="fas fa-search text-sm"></i>
                                 </button>
                             </form>
                         </div>
 
                         <!-- Wishlist -->
-                        <a href="{{ route('wishlist.index') }}" class="relative p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-rose-600 transition">
+                        <a href="{{ route('wishlist.index') }}" class="relative p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-orange-500 transition">
                             <i class="far fa-heart text-lg"></i>
                             @if($wishlistCount > 0)
-                                <span class="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center ring-2 ring-white">
+                                <span class="absolute -top-1.5 -right-1.5 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center ring-2 ring-white">
                                     {{ $wishlistCount }}
                                 </span>
                             @endif
                         </a>
 
                         <!-- Shopping Cart Toggle -->
-                        <button @click="cartOpen = true" class="relative p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-indigo-600 transition focus:outline-none">
+                        <button @click="cartOpen = true" class="relative p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-emerald-650 transition focus:outline-none">
                             <i class="far fa-shopping-cart text-lg"></i>
                             @if($cartCount > 0)
-                                <span class="absolute -top-1.5 -right-1.5 bg-indigo-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center ring-2 ring-white">
+                                <span class="absolute -top-1.5 -right-1.5 bg-emerald-650 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center ring-2 ring-white">
                                     {{ $cartCount }}
                                 </span>
                             @endif
@@ -85,7 +84,7 @@
                         @auth
                             <div x-data="{ open: false }" class="relative">
                                 <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none p-1 rounded-full hover:bg-slate-100 transition">
-                                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center font-bold text-sm">
+                                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-500 to-orange-500 text-white flex items-center justify-center font-bold text-sm">
                                         {{ substr(auth()->user()->name, 0, 1) }}
                                     </div>
                                     <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
@@ -98,18 +97,18 @@
                                     </div>
                                     
                                     @if(auth()->user()->isAdmin())
-                                        <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition">
+                                        <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition">
                                             <i class="fas fa-tachometer-alt mr-3 text-slate-400"></i> Admin Panel
                                         </a>
                                     @endif
 
-                                    <a href="{{ route('orders.index') }}" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition">
+                                    <a href="{{ route('orders.index') }}" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition">
                                         <i class="fas fa-box mr-3 text-slate-400"></i> My Orders
                                     </a>
-                                    <a href="{{ route('wishlist.index') }}" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition">
+                                    <a href="{{ route('wishlist.index') }}" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition">
                                         <i class="fas fa-heart mr-3 text-slate-400"></i> Wishlist
                                     </a>
-                                    <a href="{{ route('cart.index') }}" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition">
+                                    <a href="{{ route('cart.index') }}" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition">
                                         <i class="fas fa-shopping-cart mr-3 text-slate-400"></i> Shopping Cart
                                     </a>
                                     <hr class="border-slate-100 my-1">
@@ -122,7 +121,7 @@
                                 </div>
                             </div>
                         @else
-                            <a href="{{ route('login') }}" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm hover:shadow-lg hover:shadow-indigo-200 transition transform hover:-translate-y-0.5">
+                            <a href="{{ route('login') }}" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-750 text-white font-bold rounded-xl text-sm hover:shadow-lg hover:shadow-emerald-250 transition transform hover:-translate-y-0.5">
                                 Login
                             </a>
                         @endauth
@@ -137,13 +136,13 @@
             
             <!-- Mobile Menu Dropdown -->
             <div x-show="mobileMenu" x-transition class="md:hidden border-t border-slate-100 bg-white px-4 py-4 space-y-3 shadow-inner">
-                <a href="{{ route('home') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition font-medium">Home</a>
-                <a href="{{ route('categories.index') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition font-medium">Categories</a>
-                <a href="{{ route('products.index') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition font-medium">Products</a>
+                <a href="{{ route('home') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">Home</a>
+                <a href="{{ route('categories.index') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">Categories</a>
+                <a href="{{ route('products.index') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">Products</a>
                 <div class="pt-3 border-t border-slate-100">
                     <form action="{{ route('products.index') }}" method="GET" class="relative">
                         <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
-                            class="w-full pl-10 pr-4 py-2 bg-slate-100 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            class="w-full pl-10 pr-4 py-2 bg-slate-100 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                         <i class="fas fa-search absolute left-3.5 top-3 text-slate-400"></i>
                     </form>
                 </div>
@@ -161,21 +160,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
                     <div class="space-y-4">
                         <div class="flex items-center">
-                            <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-indigo-600 text-white shadow-lg">
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                            <span class="ml-3 text-xl font-bold text-white">ShopHub</span>
+                            <img src="{{ asset('images/logo.png') }}" alt="Shopee Logo" class="w-10 h-10 rounded-xl shadow-lg shadow-emerald-950 object-cover">
+                            <span class="ml-3 text-xl font-bold text-white">Shopee</span>
                         </div>
                         <p class="text-sm text-slate-400">Your ultimate destination for curated premium electronics, groceries, fashion, cosmetics, and home essentials. Experience simplicity in shopping.</p>
                     </div>
                     <div>
                         <h4 class="font-bold text-white mb-6 uppercase tracking-wider text-xs">Categories</h4>
                         <ul class="space-y-3 text-sm text-slate-400">
-                            <li><a href="{{ route('categories.show', 'electronics') }}" class="hover:text-white transition">Electronics</a></li>
-                            <li><a href="{{ route('categories.show', 'grocery') }}" class="hover:text-white transition">Grocery</a></li>
-                            <li><a href="{{ route('categories.show', 'makeup') }}" class="hover:text-white transition">Beauty & Makeup</a></li>
-                            <li><a href="{{ route('categories.show', 'fashion') }}" class="hover:text-white transition">Fashion Wear</a></li>
-                            <li><a href="{{ route('categories.show', 'home') }}" class="hover:text-white transition">Home Essentials</a></li>
+                            <li><a href="{{ route('categories.show', 'electronics') }}" class="hover:text-emerald-400 transition">Electronics</a></li>
+                            <li><a href="{{ route('categories.show', 'grocery') }}" class="hover:text-emerald-400 transition">Grocery</a></li>
+                            <li><a href="{{ route('categories.show', 'makeup') }}" class="hover:text-emerald-400 transition">Beauty & Makeup</a></li>
+                            <li><a href="{{ route('categories.show', 'fashion') }}" class="hover:text-emerald-400 transition">Fashion Wear</a></li>
+                            <li><a href="{{ route('categories.show', 'home') }}" class="hover:text-emerald-400 transition">Home Essentials</a></li>
                         </ul>
                     </div>
                     <div>
@@ -192,15 +189,15 @@
                         <h4 class="font-bold text-white mb-6 uppercase tracking-wider text-xs">Stay Connected</h4>
                         <p class="text-sm text-slate-400 mb-4">Follow us on social media for exclusive updates and product releases.</p>
                         <div class="flex space-x-4">
-                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-emerald-650 hover:text-white flex items-center justify-center transition"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-emerald-650 hover:text-white flex items-center justify-center transition"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-emerald-650 hover:text-white flex items-center justify-center transition"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-emerald-650 hover:text-white flex items-center justify-center transition"><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="border-t border-slate-800 mt-16 pt-8 text-center text-slate-500 text-xs">
-                    <p>&copy; 2026 ShopHub. All rights reserved. Payment processing via manual gateways.</p>
+                    <p>&copy; 2026 Shopee. All rights reserved. Payment processing via manual gateways.</p>
                 </div>
             </div>
         </footer>
@@ -217,7 +214,7 @@
                         <div class="flex-1 overflow-y-auto px-6 py-6 sm:px-6">
                             <div class="flex items-start justify-between border-b border-slate-100 pb-5">
                                 <h2 class="text-xl font-bold text-slate-900 flex items-center">
-                                    <i class="far fa-shopping-bag mr-2.5 text-indigo-600"></i> Shopping Cart
+                                    <i class="far fa-shopping-bag mr-2.5 text-emerald-600"></i> Shopping Cart
                                 </h2>
                                 <div class="ml-3 flex h-7 items-center">
                                     <button type="button" class="relative -m-2 p-2 text-slate-400 hover:text-slate-500 focus:outline-none" @click="cartOpen = false">
@@ -234,7 +231,7 @@
                                                 <i class="fas fa-shopping-cart text-slate-300 text-xl"></i>
                                             </div>
                                             <p class="text-slate-400 font-medium">Your cart is empty</p>
-                                            <a href="{{ route('products.index') }}" @click="cartOpen = false" class="text-indigo-600 hover:text-indigo-700 font-semibold text-sm mt-3 inline-block">Continue Shopping</a>
+                                            <a href="{{ route('products.index') }}" @click="cartOpen = false" class="text-emerald-600 hover:text-emerald-700 font-semibold text-sm mt-3 inline-block">Continue Shopping</a>
                                         </div>
                                     @else
                                         <ul role="list" class="-my-6 divide-y divide-slate-100">
@@ -261,7 +258,7 @@
                                                         <div class="flex flex-1 items-end justify-between text-xs">
                                                             <div class="flex items-center text-slate-500">
                                                                 <span class="mr-2">Qty:</span>
-                                                                <form method="POST" action="{{ route('cart.update', $item->product->id) }}" class="flex items-center border border-slate-200 rounded-lg">
+                                                                <form method="POST" action="{{ route('cart.update', $item->product->id) }}" class="flex items-center border border-slate-200 bg-white rounded-lg overflow-hidden">
                                                                     @csrf
                                                                     @method('PUT')
                                                                     <button type="submit" name="quantity" value="{{ max(1, $item->quantity - 1) }}" class="px-2 py-0.5 hover:bg-slate-100 text-slate-600">−</button>
@@ -274,7 +271,7 @@
                                                                 <form method="POST" action="{{ route('cart.remove', $item->product->id) }}">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="submit" class="font-medium text-rose-500 hover:text-rose-600">Remove</button>
+                                                                    <button type="submit" class="font-semibold text-rose-500 hover:text-rose-600">Remove</button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -295,7 +292,7 @@
                                 </div>
                                 <p class="mt-1.5 text-xs text-slate-400">Shipping and taxes calculated at checkout.</p>
                                 <div class="mt-6 space-y-3">
-                                    <a href="{{ route('checkout') }}" class="flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg hover:bg-indigo-700 hover:shadow-indigo-200 transition transform hover:-translate-y-0.5">
+                                    <a href="{{ route('checkout') }}" class="flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-600 to-orange-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg hover:shadow-emerald-150 transition transform hover:-translate-y-0.5">
                                         Checkout Now
                                     </a>
                                     <a href="{{ route('cart.index') }}" @click="cartOpen = false" class="flex items-center justify-center rounded-xl bg-white border border-slate-200 px-6 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
@@ -346,7 +343,7 @@
         
         <div class="flex-shrink-0 mr-3">
             <template x-if="type === 'success'">
-                <div class="w-10 h-10 rounded-xl bg-green-50 text-green-600 flex items-center justify-center">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
                     <i class="fas fa-check-circle text-lg"></i>
                 </div>
             </template>
@@ -356,7 +353,7 @@
                 </div>
             </template>
             <template x-if="type === 'info'">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
                     <i class="fas fa-info-circle text-lg"></i>
                 </div>
             </template>
