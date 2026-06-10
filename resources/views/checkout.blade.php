@@ -15,51 +15,117 @@
                 <div class="lg:col-span-8 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8 space-y-8">
                     
                     @guest
-                    <!-- Section: Account Details (Guest only) -->
+                    {{-- ── Section 1: Contact Details (Guest) ─────────────────── --}}
                     <div class="space-y-5">
                         <h3 class="font-extrabold text-slate-800 text-lg border-b border-slate-100 pb-3">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-650 text-xs font-black mr-2">1</span>
-                            Account Information
+                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 text-xs font-black mr-2">1</span>
+                            <i class="fas fa-user text-emerald-500 mr-1.5"></i> Contact Details
                         </h3>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label for="name" class="block text-xs font-bold uppercase text-slate-400 mb-2">Full Name</label>
+                                <label for="name" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-id-card mr-1"></i> Full Name <span class="text-red-400">*</span>
+                                </label>
                                 <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
-                                    placeholder="e.g. John Doe">
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none"
+                                    placeholder="e.g. Rahim Uddin">
+                                @error('name')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
-                                <label for="email" class="block text-xs font-bold uppercase text-slate-400 mb-2">Email Address</label>
-                                <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
-                                    placeholder="john@example.com">
-                            </div>
-                            
-                            <div class="sm:col-span-2">
-                                <label class="inline-flex items-center mt-2 cursor-pointer">
-                                    <input type="checkbox" name="create_account" value="1" x-model="createAccount" class="rounded border-slate-300 text-emerald-650 focus:ring-emerald-500 w-4 h-4">
-                                    <span class="ml-2.5 text-sm font-bold text-slate-700">Create an account?</span>
+                                <label for="email" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-envelope mr-1"></i> Email Address <span class="text-red-400">*</span>
                                 </label>
+                                <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none"
+                                    placeholder="you@example.com">
+                                @error('email')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
+                        </div>
 
-                            <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4" x-show="createAccount" x-transition style="display: none;">
+                        {{-- ── Create Account Toggle Card ─────────────────────── --}}
+                        <div class="mt-2">
+                            <label
+                                class="flex items-start gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 select-none"
+                                :class="createAccount
+                                    ? 'border-emerald-500 bg-emerald-50/60'
+                                    : 'border-slate-200 bg-slate-50 hover:border-emerald-300 hover:bg-emerald-50/30'">
+
+                                {{-- Custom styled checkbox --}}
+                                <span class="mt-0.5 flex-shrink-0 w-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center"
+                                    :class="createAccount ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-300'">
+                                    <i class="fas fa-check text-white text-[10px]" x-show="createAccount" x-transition></i>
+                                </span>
+                                <input type="checkbox" name="create_account" value="1"
+                                    x-model="createAccount" class="sr-only">
+
+                                <div class="flex-1">
+                                    <p class="font-bold text-slate-800 text-sm">Save my details &amp; create an account</p>
+                                    <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                        Get order tracking, faster future checkouts, and wishlist access — completely free.
+                                    </p>
+                                </div>
+
+                                <i class="fas fa-user-plus text-xl flex-shrink-0 mt-0.5 transition-colors duration-200"
+                                    :class="createAccount ? 'text-emerald-500' : 'text-slate-300'"></i>
+                            </label>
+
+                            {{-- Password fields — expand when checkbox is ticked --}}
+                            <div x-show="createAccount" x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 -translate-y-2"
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100 translate-y-0"
+                                x-transition:leave-end="opacity-0 -translate-y-2"
+                                style="display:none;"
+                                class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-emerald-50/40 border border-emerald-100 rounded-2xl">
+
+                                <div class="sm:col-span-2">
+                                    <p class="text-xs font-bold text-emerald-700 flex items-center gap-1.5 mb-3">
+                                        <i class="fas fa-lock text-emerald-500"></i>
+                                        Choose a password for your new account
+                                    </p>
+                                </div>
+
                                 <div>
-                                    <label for="password" class="block text-xs font-bold uppercase text-slate-400 mb-2">Password</label>
+                                    <label for="password" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                        Password <span class="text-red-400">*</span>
+                                    </label>
                                     <input type="password" id="password" name="password"
-                                        class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
-                                        placeholder="••••••••">
+                                        :required="createAccount"
+                                        class="w-full px-4 py-2.5 bg-white border border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none"
+                                        placeholder="Min. 8 characters">
+                                    @error('password')
+                                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
-                                    <label for="password_confirmation" class="block text-xs font-bold uppercase text-slate-400 mb-2">Confirm Password</label>
+                                    <label for="password_confirmation" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                        Confirm Password <span class="text-red-400">*</span>
+                                    </label>
                                     <input type="password" id="password_confirmation" name="password_confirmation"
-                                        class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
-                                        placeholder="••••••••">
+                                        :required="createAccount"
+                                        class="w-full px-4 py-2.5 bg-white border border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none"
+                                        placeholder="Re-enter password">
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Already have an account? --}}
+                        <p class="text-xs text-slate-500 text-center">
+                            Already have an account?
+                            <a href="{{ route('login') }}" class="font-bold text-emerald-600 hover:text-emerald-700 hover:underline">
+                                Sign in here
+                            </a>
+                            to get faster checkout.
+                        </p>
                     </div>
                     @endguest
+
 
                     <!-- Section: Shipping Details -->
                     <div class="space-y-5">
