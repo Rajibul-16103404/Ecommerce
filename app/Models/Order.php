@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['user_id', 'order_number', 'total_price', 'status', 'payment_status', 'shipping_address', 'shipping_city', 'shipping_zip', 'shipping_phone'])]
+#[Fillable(['user_id', 'order_number', 'total_price', 'status', 'payment_status', 'shipping_address', 'shipping_city', 'shipping_zip', 'shipping_phone', 'payment_method', 'payment_sender', 'transaction_id'])]
 class Order extends Model
 {
     protected function casts(): array

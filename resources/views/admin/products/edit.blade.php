@@ -1,0 +1,108 @@
+@extends('layouts.admin')
+
+@section('title', 'Edit Product - ShopHub')
+@section('page_title', 'Edit Product')
+
+@section('content')
+    <div class="space-y-6 max-w-4xl mx-auto">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+            <div>
+                <a href="{{ route('admin.products.index') }}" class="text-xs font-bold text-indigo-400 hover:underline flex items-center mb-2">
+                    <i class="fas fa-arrow-left mr-1.5"></i> Back to Inventory
+                </a>
+                <h1 class="text-2xl font-black text-white tracking-tight">Edit Product: <span class="text-indigo-400">{{ $product->name }}</span></h1>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ route('admin.products.update', $product->id) }}" enctype="multipart/form-data" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
+            @csrf
+            @method('PUT')
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Name -->
+                <div class="sm:col-span-2">
+                    <label for="name" class="block text-xs font-bold uppercase text-slate-500 mb-2">Product Name</label>
+                    <input type="text" id="name" name="name" value="{{ old('name', $product->name) }}" required
+                        class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm focus:outline-none text-slate-100 placeholder-slate-600">
+                    @error('name') <span class="text-xs text-rose-450 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label for="category_id" class="block text-xs font-bold uppercase text-slate-500 mb-2">Category</label>
+                    <select id="category_id" name="category_id" required
+                        class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm focus:outline-none text-slate-100">
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->id }}" @selected(old('category_id', $product->category_id) == $cat->id)>
+                                {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id') <span class="text-xs text-rose-450 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Stock -->
+                <div>
+                    <label for="stock" class="block text-xs font-bold uppercase text-slate-500 mb-2">Stock Level</label>
+                    <input type="number" id="stock" name="stock" value="{{ old('stock', $product->stock) }}" min="0" required
+                        class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm focus:outline-none text-slate-100">
+                    @error('stock') <span class="text-xs text-rose-450 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Price -->
+                <div>
+                    <label for="price" class="block text-xs font-bold uppercase text-slate-500 mb-2">Price ($)</label>
+                    <input type="number" id="price" name="price" value="{{ old('price', $product->price) }}" step="0.01" min="0" required
+                        class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm focus:outline-none text-slate-100">
+                    @error('price') <span class="text-xs text-rose-450 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Discount Price -->
+                <div>
+                    <label for="discount_price" class="block text-xs font-bold uppercase text-slate-500 mb-2">Discount Price ($) <span class="text-[9px] text-slate-500 lowercase">(optional)</span></label>
+                    <input type="number" id="discount_price" name="discount_price" value="{{ old('discount_price', $product->discount_price) }}" step="0.01" min="0"
+                        class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm focus:outline-none text-slate-100">
+                    @error('discount_price') <span class="text-xs text-rose-450 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Description -->
+                <div class="sm:col-span-2">
+                    <label for="description" class="block text-xs font-bold uppercase text-slate-500 mb-2">Product Description</label>
+                    <textarea id="description" name="description" rows="5" required
+                        class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm focus:outline-none text-slate-100 placeholder-slate-600">{{ old('description', $product->description) }}</textarea>
+                    @error('description') <span class="text-xs text-rose-450 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Current Image & Replacement -->
+                <div class="sm:col-span-2 space-y-4">
+                    <label class="block text-xs font-bold uppercase text-slate-500">Product Image File</label>
+                    
+                    @if($product->image)
+                        <div class="flex items-center space-x-4 p-4 bg-slate-900 border border-slate-800 rounded-2xl w-max">
+                            <img src="{{ $product->image }}" alt="Current Product Image" class="w-16 h-16 object-cover rounded-xl">
+                            <div>
+                                <span class="block text-xs font-bold text-slate-400">Current Image Link</span>
+                                <a href="{{ $product->image }}" target="_blank" class="text-[10px] text-indigo-400 hover:underline truncate max-w-xs block font-mono">{{ $product->image }}</a>
+                            </div>
+                        </div>
+                    @endif
+
+                    <input type="file" id="image" name="image" accept="image/*"
+                        class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm focus:outline-none text-slate-400 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-indigo-400 hover:file:bg-slate-700">
+                    <span class="text-[10px] text-slate-500 mt-2 block">Upload a replacement image to overwrite the existing one. PNG, JPG, or WEBP. Max 2MB.</span>
+                    @error('image') <span class="text-xs text-rose-450 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="pt-4 border-t border-slate-850 flex items-center justify-end space-x-3">
+                <a href="{{ route('admin.products.index') }}" class="px-5 py-3 bg-slate-900 border border-slate-800 hover:bg-slate-850 text-slate-400 hover:text-slate-200 text-xs font-bold rounded-xl transition">
+                    Cancel
+                </a>
+                <button type="submit" class="px-6 py-3 bg-indigo-650 hover:bg-indigo-750 text-white text-xs font-bold rounded-xl transition shadow-lg shadow-indigo-500/10">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+@endsection

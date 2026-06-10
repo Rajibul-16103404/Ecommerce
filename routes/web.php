@@ -1,27 +1,14 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WishlistController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-// Authentication routes (stub)
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
-
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/');
-})->name('logout');
 
 // Home
 Route::get('/', [ProductController::class, 'home'])->name('home');
@@ -32,31 +19,65 @@ Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])->name('categories.show');
 
-// Cart (authenticated customers)
+// Authentication routes
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+// Customer Panel (authenticated)
 Route::middleware('auth')->group(function () {
+    // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::put('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
-});
 
-// Wishlist (authenticated)
-Route::middleware('auth')->group(function () {
+    // Wishlist
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
     Route::delete('/wishlist/{product}', [WishlistController::class, 'remove'])->name('wishlist.remove');
-});
 
-// Reviews (authenticated)
-Route::middleware('auth')->group(function () {
+    // Reviews
     Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    // Checkout & Orders
+    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
 
-// Orders (authenticated)
-Route::middleware('auth')->group(function () {
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+// Admin Panel (authenticated & role=admin)
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    // Products CRUD
+    Route::get('/products', [AdminController::class, 'productsIndex'])->name('products.index');
+    Route::get('/products/create', [AdminController::class, 'productsCreate'])->name('products.create');
+    Route::post('/products', [AdminController::class, 'productsStore'])->name('products.store');
+    Route::get('/products/{product}/edit', [AdminController::class, 'productsEdit'])->name('products.edit');
+    Route::put('/products/{product}', [AdminController::class, 'productsUpdate'])->name('products.update');
+    Route::delete('/products/{product}', [AdminController::class, 'productsDestroy'])->name('products.destroy');
+
+    // Categories CRUD
+    Route::get('/categories', [AdminController::class, 'categoriesIndex'])->name('categories.index');
+    Route::post('/categories', [AdminController::class, 'categoriesStore'])->name('categories.store');
+    Route::delete('/categories/{category}', [AdminController::class, 'categoriesDestroy'])->name('categories.destroy');
+
+    // Orders management
+    Route::get('/orders', [AdminController::class, 'ordersIndex'])->name('orders.index');
+    Route::get('/orders/{order}', [AdminController::class, 'ordersShow'])->name('orders.show');
+    Route::put('/orders/{order}/status', [AdminController::class, 'ordersUpdateStatus'])->name('orders.update-status');
+    Route::put('/orders/{order}/payment', [AdminController::class, 'ordersUpdatePayment'])->name('orders.update-payment');
+
+    // Vendors management
+    Route::get('/vendors', [AdminController::class, 'vendorsIndex'])->name('vendors.index');
+    Route::put('/vendors/{vendor}/verify', [AdminController::class, 'vendorsToggleVerify'])->name('vendors.toggle-verify');
 });

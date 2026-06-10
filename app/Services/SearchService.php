@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class SearchService
 {
@@ -36,11 +38,16 @@ class SearchService
 
         $q->where('stock', '>', 0);
 
+        $isSqlite = DB::getDriverName() === 'sqlite';
+        $trendingOrder = $isSqlite
+            ? '(views / (julianday(\'now\') - julianday(created_at) + 1) + 1) DESC'
+            : '(views / DATEDIFF(NOW(), created_at) + 1) DESC';
+
         match ($sort) {
             'price_low' => $q->orderBy('price', 'asc'),
             'price_high' => $q->orderBy('price', 'desc'),
             'popular' => $q->orderBy('views', 'desc'),
-            'trending' => $q->orderByRaw('(views / DATEDIFF(NOW(), created_at) + 1) DESC'),
+            'trending' => $q->orderByRaw($trendingOrder),
             default => $q->orderBy('created_at', 'desc'), // latest
         };
 
@@ -55,21 +62,24 @@ class SearchService
             ->paginate($perPage);
     }
 
-    public function getFeaturedProducts(int $limit = 8): array
+    public function getFeaturedProducts(int $limit = 8): Collection
     {
         return Product::where('stock', '>', 0)
             ->orderBy('views', 'desc')
             ->limit($limit)
-            ->get()
-            ->toArray();
+            ->get();
     }
 
-    public function getTrendingProducts(int $limit = 8): array
+    public function getTrendingProducts(int $limit = 8): Collection
     {
+        $isSqlite = DB::getDriverName() === 'sqlite';
+        $trendingOrder = $isSqlite
+            ? '(views / (julianday(\'now\') - julianday(created_at) + 1) + 1) DESC'
+            : '(views / DATEDIFF(NOW(), created_at) + 1) DESC';
+
         return Product::where('stock', '>', 0)
-            ->orderByRaw('(views / DATEDIFF(NOW(), created_at) + 1) DESC')
+            ->orderByRaw($trendingOrder)
             ->limit($limit)
-            ->get()
-            ->toArray();
+            ->get();
     }
 }

@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('shipping_city');
             $table->string('shipping_zip');
             $table->string('shipping_phone');
+            $table->string('payment_method')->default('cod');
+            $table->string('payment_sender')->nullable();
+            $table->string('transaction_id')->nullable();
             $table->timestamps();
         });
     }
