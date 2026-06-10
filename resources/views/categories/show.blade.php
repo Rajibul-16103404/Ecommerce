@@ -20,7 +20,7 @@
     <!-- Products Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @forelse($products->items() as $product)
-        <div class="bg-white rounded-lg shadow hover:shadow-xl transition duration-300 overflow-hidden group">
+        <div class="bg-white rounded-lg shadow hover:shadow-xl transition duration-300 hover-float overflow-hidden group">
             <!-- Product Image -->
             <div class="relative overflow-hidden bg-gray-100 h-64">
                 <img src="https://via.placeholder.com/300x300?text={{ urlencode($product->name) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">

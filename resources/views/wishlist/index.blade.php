@@ -23,7 +23,7 @@
                     @php
                         $product = $item->product;
                     @endphp
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 group flex flex-col justify-between h-full relative">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 hover-float group flex flex-col justify-between h-full relative">
                         
                         <!-- Remove from Wishlist Floating button -->
                         <form method="POST" action="{{ route('wishlist.remove', $product->id) }}" class="absolute top-4 right-4 z-10">

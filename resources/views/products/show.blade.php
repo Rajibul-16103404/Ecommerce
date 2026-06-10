@@ -283,7 +283,7 @@
             <h2 class="text-2xl font-black text-slate-900 tracking-tight mb-8">You May Also Like</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 @foreach ($related as $relatedProduct)
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 group flex flex-col justify-between h-full">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 hover-float group flex flex-col justify-between h-full">
                         <div>
                             <div class="relative bg-slate-50 h-52 flex items-center justify-center overflow-hidden">
                                 @if($relatedProduct->image)

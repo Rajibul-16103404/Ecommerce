@@ -86,7 +86,7 @@
                 @if ($products->count() > 0)
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach ($products as $product)
-                            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 group flex flex-col justify-between h-full">
+                            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 hover-float group flex flex-col justify-between h-full">
                                 <div>
                                     <!-- Image and Badge -->
                                     <div class="relative bg-slate-50 h-56 flex items-center justify-center overflow-hidden">

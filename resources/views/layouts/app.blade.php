@@ -16,16 +16,14 @@
             font-family: 'Outfit', sans-serif;
         }
         /* Custom premium animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-        }
         .hover-float {
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.35s ease;
         }
         .hover-float:hover {
-            animation: float 2s ease-in-out infinite;
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 24px 40px -8px rgb(0 0 0 / 0.14), 0 10px 16px -6px rgb(0 0 0 / 0.08);
         }
         @keyframes pulse-soft {
             0%, 100% { opacity: 1; transform: scale(1); }
@@ -34,14 +32,14 @@
         .pulse-soft {
             animation: pulse-soft 3s ease-in-out infinite;
         }
-        /* Fade in on page load */
+        /* Fade in on page load — 'both' means the keyframe handles opacity
+           so there is no orphaned opacity:0 base rule to leak through on hover */
         .fade-in-up {
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0);   }
         }
     </style>
 </head>
