@@ -253,7 +253,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 @foreach ($featured as $product)
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 group flex flex-col justify-between h-full">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 hover-float fade-in-up group flex flex-col justify-between h-full">
                         <div>
                             <!-- Product Image & Overlay -->
                             <div class="relative bg-slate-50 h-56 flex items-center justify-center overflow-hidden">
@@ -364,7 +364,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 @foreach ($trending as $product)
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 group flex flex-col justify-between h-full">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition duration-300 hover-float fade-in-up group flex flex-col justify-between h-full">
                         <div>
                             <!-- Product Image & Overlay -->
                             <div class="relative bg-slate-50 h-56 flex items-center justify-center overflow-hidden">
@@ -444,7 +444,7 @@
     <!-- Support Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-2xl p-8 border border-slate-100 flex items-start space-x-5 shadow-sm">
+            <div class="bg-white rounded-2xl p-8 border border-slate-100 flex items-start space-x-5 shadow-sm hover-float fade-in-up">
                 <div class="w-14 h-14 bg-emerald-50 text-emerald-650 rounded-xl flex items-center justify-center flex-shrink-0">
                     <i class="fas fa-truck text-2xl animate-pulse"></i>
                 </div>
@@ -453,22 +453,22 @@
                     <p class="text-slate-500 text-sm mt-1">Free shipping on orders over $50. Prompt and secured delivery right to your door.</p>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl p-8 border border-slate-100 flex items-start space-x-5 shadow-sm">
+            <div class="bg-white rounded-2xl p-8 border border-slate-100 flex items-start space-x-5 shadow-sm hover-float fade-in-up">
                 <div class="w-14 h-14 bg-orange-50 text-orange-650 rounded-xl flex items-center justify-center flex-shrink-0">
                     <i class="fas fa-wallet text-2xl"></i>
                 </div>
                 <div>
                     <h3 class="font-bold text-lg text-slate-900">Manual Payment Verification</h3>
-                    <p class="text-slate-500 text-sm mt-1">Manual payments with Mobile Banking or Direct Bank Transfer. Quick verification within hours.</p>
+                    <p class="text-slate-505 text-sm mt-1">Manual payments with Mobile Banking or Direct Bank Transfer. Quick verification within hours.</p>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl p-8 border border-slate-100 flex items-start space-x-5 shadow-sm">
+            <div class="bg-white rounded-2xl p-8 border border-slate-100 flex items-start space-x-5 shadow-sm hover-float fade-in-up">
                 <div class="w-14 h-14 bg-emerald-50 text-emerald-650 rounded-xl flex items-center justify-center flex-shrink-0">
                     <i class="fas fa-headset text-2xl"></i>
                 </div>
                 <div>
                     <h3 class="font-bold text-lg text-slate-900">24/7 Service Desk</h3>
-                    <p class="text-slate-500 text-sm mt-1">Dedicated support agents available round the clock. Feel free to contact our desks.</p>
+                    <p class="text-slate-505 text-sm mt-1">Dedicated support agents available round the clock. Feel free to contact our desks.</p>
                 </div>
             </div>
         </div>

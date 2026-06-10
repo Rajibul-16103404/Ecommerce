@@ -53,6 +53,12 @@
                         </table>
                     </div>
                 @endif
+
+                @if($categories->hasPages())
+                    <div class="pt-4 border-t border-slate-100 mt-4">
+                        {{ $categories->links() }}
+                    </div>
+                @endif
             </div>
 
             <!-- Create category form -->

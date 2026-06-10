@@ -15,6 +15,34 @@
         body {
             font-family: 'Outfit', sans-serif;
         }
+        /* Custom premium animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .hover-float {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hover-float:hover {
+            animation: float 2s ease-in-out infinite;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.01); }
+        }
+        .pulse-soft {
+            animation: pulse-soft 3s ease-in-out infinite;
+        }
+        /* Fade in on page load */
+        .fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-slate-50 text-slate-800 flex flex-col min-h-screen">
@@ -42,9 +70,15 @@
 
                     <!-- Navigation Links (Desktop) -->
                     <div class="hidden md:flex items-center space-x-8">
-                        <a href="{{ route('home') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition {{ request()->routeIs('home') ? 'text-emerald-600' : '' }}">Home</a>
-                        <a href="{{ route('categories.index') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition {{ request()->routeIs('categories.*') ? 'text-emerald-600' : '' }}">Categories</a>
-                        <a href="{{ route('products.index') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition {{ request()->routeIs('products.*') ? 'text-emerald-600' : '' }}">Products</a>
+                        <a href="{{ route('home') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition flex items-center gap-1.5 group {{ request()->routeIs('home') ? 'text-emerald-600' : '' }}">
+                            <i class="fas fa-home text-sm transition {{ request()->routeIs('home') ? 'text-emerald-600' : 'text-slate-400 group-hover:text-emerald-600 group-hover:scale-110' }}"></i> Home
+                        </a>
+                        <a href="{{ route('categories.index') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition flex items-center gap-1.5 group {{ request()->routeIs('categories.*') ? 'text-emerald-600' : '' }}">
+                            <i class="fas fa-th-large text-sm transition {{ request()->routeIs('categories.*') ? 'text-emerald-600' : 'text-slate-400 group-hover:text-emerald-600 group-hover:scale-110' }}"></i> Categories
+                        </a>
+                        <a href="{{ route('products.index') }}" class="font-semibold text-slate-650 hover:text-emerald-600 transition flex items-center gap-1.5 group {{ request()->routeIs('products.*') ? 'text-emerald-600' : '' }}">
+                            <i class="fas fa-shopping-bag text-sm transition {{ request()->routeIs('products.*') ? 'text-emerald-600' : 'text-slate-400 group-hover:text-emerald-600 group-hover:scale-110' }}"></i> Products
+                        </a>
                     </div>
 
                     <!-- Actions Panel -->
@@ -136,9 +170,15 @@
             
             <!-- Mobile Menu Dropdown -->
             <div x-show="mobileMenu" x-transition class="md:hidden border-t border-slate-100 bg-white px-4 py-4 space-y-3 shadow-inner">
-                <a href="{{ route('home') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">Home</a>
-                <a href="{{ route('categories.index') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">Categories</a>
-                <a href="{{ route('products.index') }}" class="block px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">Products</a>
+                <a href="{{ route('home') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">
+                    <i class="fas fa-home text-slate-400"></i> Home
+                </a>
+                <a href="{{ route('categories.index') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">
+                    <i class="fas fa-th-large text-slate-400"></i> Categories
+                </a>
+                <a href="{{ route('products.index') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition font-medium">
+                    <i class="fas fa-shopping-bag text-slate-400"></i> Products
+                </a>
                 <div class="pt-3 border-t border-slate-100">
                     <form action="{{ route('products.index') }}" method="GET" class="relative">
                         <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"

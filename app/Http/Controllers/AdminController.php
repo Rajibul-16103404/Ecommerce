@@ -146,7 +146,7 @@ class AdminController extends Controller
 
     public function categoriesIndex()
     {
-        $categories = Category::withCount('products')->get();
+        $categories = Category::withCount('products')->paginate(10);
 
         return view('admin.categories.index', compact('categories'));
     }
@@ -218,7 +218,7 @@ class AdminController extends Controller
     {
         $vendors = User::with('vendorProfile')
             ->where('role', 'vendor')
-            ->get();
+            ->paginate(10);
 
         return view('admin.vendors.index', compact('vendors'));
     }
