@@ -6,9 +6,12 @@ use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\ShippingLocation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -30,13 +33,14 @@ class OrderController extends Controller
         } else {
             $sessionCart = session('cart', []);
             $productIds = array_keys($sessionCart);
-            if (!empty($productIds)) {
+            if (! empty($productIds)) {
                 $products = Product::with('category')->whereIn('id', $productIds)->get();
                 $cartItems = $products->map(function ($product) use ($sessionCart) {
-                    $item = new CartItem();
+                    $item = new CartItem;
                     $item->product_id = $product->id;
                     $item->quantity = $sessionCart[$product->id] ?? 1;
                     $item->setRelation('product', $product);
+
                     return $item;
                 });
             } else {
@@ -53,7 +57,7 @@ class OrderController extends Controller
             $subtotal += $item->product->discounted_price * $item->quantity;
         }
 
-        $shippingLocations = \App\Models\ShippingLocation::all();
+        $shippingLocations = ShippingLocation::all();
         $defaultLocation = $shippingLocations->first();
         $shipping = $subtotal == 0 ? 0.00 : ($defaultLocation ? $defaultLocation->fee : 60.00);
         $total = $subtotal + $shipping;
@@ -73,7 +77,7 @@ class OrderController extends Controller
             'transaction_id' => 'required_if:payment_method,bkash,nagad,rocket,bank_transfer|nullable|string|max:100',
         ];
 
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             $rules['name'] = 'required|string|max:255';
             if ($request->boolean('create_account')) {
                 $rules['email'] = 'required|string|email|max:255|unique:users,email';
@@ -92,13 +96,14 @@ class OrderController extends Controller
         } else {
             $sessionCart = session('cart', []);
             $productIds = array_keys($sessionCart);
-            if (!empty($productIds)) {
+            if (! empty($productIds)) {
                 $products = Product::with('category')->whereIn('id', $productIds)->get();
                 $cartItems = $products->map(function ($product) use ($sessionCart) {
-                    $item = new CartItem();
+                    $item = new CartItem;
                     $item->product_id = $product->id;
                     $item->quantity = $sessionCart[$product->id] ?? 1;
                     $item->setRelation('product', $product);
+
                     return $item;
                 });
             } else {
@@ -117,7 +122,7 @@ class OrderController extends Controller
         }
 
         // Retrieve shipping fee based on selected city
-        $shippingLocation = \App\Models\ShippingLocation::where('name', $request->shipping_city)->first();
+        $shippingLocation = ShippingLocation::where('name', $request->shipping_city)->first();
         $shipping = $subtotal == 0 ? 0.00 : ($shippingLocation ? $shippingLocation->fee : 60.00);
         $total = $subtotal + $shipping;
 
@@ -128,7 +133,7 @@ class OrderController extends Controller
                     $userId = Auth::id();
                 } else {
                     if ($request->boolean('create_account')) {
-                        $user = \App\Models\User::create([
+                        $user = User::create([
                             'name' => $request->name,
                             'email' => $request->email,
                             'password' => bcrypt($request->password),
@@ -139,12 +144,12 @@ class OrderController extends Controller
                         Auth::login($user);
                         $userId = $user->id;
                     } else {
-                        $user = \App\Models\User::where('email', $request->email)->first();
-                        if (!$user) {
-                            $user = \App\Models\User::create([
+                        $user = User::where('email', $request->email)->first();
+                        if (! $user) {
+                            $user = User::create([
                                 'name' => $request->name,
                                 'email' => $request->email,
-                                'password' => bcrypt(\Illuminate\Support\Str::random(16)),
+                                'password' => bcrypt(Str::random(16)),
                                 'role' => 'customer',
                                 'phone' => $request->shipping_phone,
                                 'address' => $request->shipping_address,
@@ -174,9 +179,12 @@ class OrderController extends Controller
                     'status' => 'pending',
                     'payment_status' => $request->payment_method === 'cod' ? 'pending' : 'pending_verification',
                     'shipping_address' => $request->shipping_address,
+                    'shipping_area' => $request->shipping_area,
+                    'shipping_landmark' => $request->shipping_landmark,
                     'shipping_city' => $request->shipping_city,
                     'shipping_zip' => $request->shipping_zip,
                     'shipping_phone' => $request->shipping_phone,
+                    'shipping_notes' => $request->shipping_notes,
                     'payment_method' => $request->payment_method,
                     'payment_sender' => $request->payment_sender,
                     'transaction_id' => $request->transaction_id,
@@ -225,7 +233,7 @@ class OrderController extends Controller
             $canView = true;
         }
 
-        if (!$canView) {
+        if (! $canView) {
             abort(403, 'Unauthorized access.');
         }
 

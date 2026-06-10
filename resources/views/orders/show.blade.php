@@ -130,14 +130,60 @@
             <div class="lg:col-span-4 space-y-6">
                 <!-- Shipping Details -->
                 <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8 space-y-4">
-                    <h3 class="font-extrabold text-slate-800 text-base border-b border-slate-100 pb-3">Shipping Address</h3>
-                    <div class="text-sm text-slate-600 space-y-1">
-                        <p class="font-bold text-slate-800">{{ $order->user->name }}</p>
-                        <p>{{ $order->shipping_address }}</p>
-                        <p>{{ $order->shipping_city }}, {{ $order->shipping_zip }}</p>
-                        <p class="pt-2 flex items-center font-semibold text-slate-700">
-                            <i class="fas fa-phone mr-2 text-xs text-slate-400"></i> {{ $order->shipping_phone }}
-                        </p>
+                    <h3 class="font-extrabold text-slate-800 text-base border-b border-slate-100 pb-3 flex items-center gap-2">
+                        <i class="fas fa-truck text-emerald-500"></i> Shipping Address
+                    </h3>
+                    <div class="text-sm text-slate-600 space-y-3">
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Recipient</p>
+                            <p class="font-bold text-slate-800">{{ $order->user->name }}</p>
+                        </div>
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Street Address</p>
+                            <p>{{ $order->shipping_address }}</p>
+                        </div>
+
+                        @if($order->shipping_area)
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Area / Neighbourhood</p>
+                            <p>{{ $order->shipping_area }}</p>
+                        </div>
+                        @endif
+
+                        @if($order->shipping_landmark)
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Nearest Landmark</p>
+                            <p>{{ $order->shipping_landmark }}</p>
+                        </div>
+                        @endif
+
+                        <div class="flex gap-4">
+                            <div>
+                                <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">City</p>
+                                <p class="font-semibold text-slate-700">{{ $order->shipping_city }}</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">ZIP Code</p>
+                                <p class="font-semibold text-slate-700">{{ $order->shipping_zip }}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 pt-1">
+                            <i class="fas fa-phone text-xs text-emerald-500 flex-shrink-0"></i>
+                            <span class="font-semibold text-slate-700">{{ $order->shipping_phone }}</span>
+                        </div>
+
+                        @if($order->shipping_notes)
+                        <div class="mt-2 p-3 bg-amber-50 border border-amber-100 rounded-xl">
+                            <p class="text-[10px] uppercase tracking-wider text-amber-600 font-bold mb-1 flex items-center gap-1">
+                                <i class="fas fa-note-sticky"></i> Delivery Instructions
+                            </p>
+                            <p class="text-xs text-amber-800 leading-relaxed">{{ $order->shipping_notes }}</p>
+                        </div>
+                        @endif
+
                     </div>
                 </div>
 

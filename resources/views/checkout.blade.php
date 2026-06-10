@@ -64,41 +64,125 @@
                     <!-- Section: Shipping Details -->
                     <div class="space-y-5">
                         <h3 class="font-extrabold text-slate-800 text-lg border-b border-slate-100 pb-3">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-650 text-xs font-black mr-2">{{ auth()->check() ? '1' : '2' }}</span>
-                            Shipping Information
+                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 text-xs font-black mr-2">{{ auth()->check() ? '1' : '2' }}</span>
+                            <i class="fas fa-truck text-emerald-500 mr-1.5"></i> Shipping Information
                         </h3>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                            {{-- Street Address (full width) --}}
                             <div class="sm:col-span-2">
-                                <label for="shipping_address" class="block text-xs font-bold uppercase text-slate-400 mb-2">Street Address</label>
-                                <input type="text" id="shipping_address" name="shipping_address" value="{{ old('shipping_address') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
-                                    placeholder="House number, Street name, Apartment, etc.">
+                                <label for="shipping_address" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-house-chimney mr-1"></i> Street Address <span class="text-red-400">*</span>
+                                </label>
+                                <input type="text" id="shipping_address" name="shipping_address"
+                                    value="{{ old('shipping_address', auth()->check() ? auth()->user()->address : '') }}"
+                                    required
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-400"
+                                    placeholder="House / Flat no., Road no., Block, Street name…">
+                                @error('shipping_address')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
+
+                            {{-- Area / Neighbourhood --}}
                             <div>
-                                <label for="shipping_city" class="block text-xs font-bold uppercase text-slate-400 mb-2">City / Location</label>
-                                <select id="shipping_city" name="shipping_city" required 
+                                <label for="shipping_area" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-location-dot mr-1"></i> Area / Neighbourhood
+                                </label>
+                                <input type="text" id="shipping_area" name="shipping_area"
+                                    value="{{ old('shipping_area') }}"
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-400"
+                                    placeholder="e.g. Dhanmondi, Gulshan, Uttara…">
+                                @error('shipping_area')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            {{-- Nearest Landmark --}}
+                            <div>
+                                <label for="shipping_landmark" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-map-pin mr-1"></i> Nearest Landmark
+                                </label>
+                                <input type="text" id="shipping_landmark" name="shipping_landmark"
+                                    value="{{ old('shipping_landmark') }}"
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-400"
+                                    placeholder="e.g. Beside Bashundhara City, Behind Farmgate…">
+                                @error('shipping_landmark')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            {{-- City / Location --}}
+                            <div>
+                                <label for="shipping_city" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-city mr-1"></i> City / Location <span class="text-red-400">*</span>
+                                </label>
+                                <select id="shipping_city" name="shipping_city" required
                                     class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none"
                                     x-on:change="shippingFee = parseFloat($event.target.selectedOptions[0].getAttribute('data-fee'))">
                                     @foreach($shippingLocations as $loc)
-                                        <option value="{{ $loc->name }}" data-fee="{{ $loc->fee }}" {{ old('shipping_city') == $loc->name ? 'selected' : '' }}>
-                                            {{ $loc->name }} (৳{{ number_format($loc->fee, 2) }})
+                                        <option value="{{ $loc->name }}" data-fee="{{ $loc->fee }}"
+                                            {{ old('shipping_city') == $loc->name ? 'selected' : '' }}>
+                                            {{ $loc->name }} — ৳{{ number_format($loc->fee, 2) }} shipping
                                         </option>
                                     @endforeach
                                 </select>
+                                @error('shipping_city')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
+
+                            {{-- ZIP Code --}}
                             <div>
-                                <label for="shipping_zip" class="block text-xs font-bold uppercase text-slate-400 mb-2">ZIP / Postal Code</label>
-                                <input type="text" id="shipping_zip" name="shipping_zip" value="{{ old('shipping_zip') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
+                                <label for="shipping_zip" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-envelope-open mr-1"></i> ZIP / Postal Code <span class="text-red-400">*</span>
+                                </label>
+                                <input type="text" id="shipping_zip" name="shipping_zip"
+                                    value="{{ old('shipping_zip') }}"
+                                    required
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-400"
                                     placeholder="e.g. 1207">
+                                @error('shipping_zip')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
+
+                            {{-- Primary Phone --}}
+                            <div>
+                                <label for="shipping_phone" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-phone mr-1"></i> Contact Phone <span class="text-red-400">*</span>
+                                </label>
+                                <input type="tel" id="shipping_phone" name="shipping_phone"
+                                    value="{{ old('shipping_phone', auth()->check() ? auth()->user()->phone : '') }}"
+                                    required
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-400"
+                                    placeholder="+8801XXXXXXXXX">
+                                @error('shipping_phone')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            {{-- Delivery Notes (full width) --}}
                             <div class="sm:col-span-2">
-                                <label for="shipping_phone" class="block text-xs font-bold uppercase text-slate-400 mb-2">Phone Number</label>
-                                <input type="text" id="shipping_phone" name="shipping_phone" value="{{ old('shipping_phone') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
-                                    placeholder="e.g. +88017XXXXXXXX">
+                                <label for="shipping_notes" class="block text-xs font-bold uppercase text-slate-400 mb-2">
+                                    <i class="fas fa-note-sticky mr-1"></i> Delivery Instructions
+                                    <span class="text-slate-300 font-normal normal-case ml-1">(optional)</span>
+                                </label>
+                                <textarea id="shipping_notes" name="shipping_notes" rows="3"
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-400 resize-none"
+                                    placeholder="Gate code, preferred delivery time, leave at door, call before arriving, etc.">{{ old('shipping_notes') }}</textarea>
                             </div>
+
+                        </div>
+
+                        {{-- Shipping estimate notice --}}
+                        <div class="flex items-start gap-3 bg-emerald-50 border border-emerald-100 rounded-2xl px-4 py-3">
+                            <i class="fas fa-circle-info text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                            <p class="text-xs text-emerald-700 leading-relaxed">
+                                <strong>Estimated delivery:</strong> Dhaka – 1 to 2 business days &nbsp;|&nbsp; Outside Dhaka – 3 to 5 business days.
+                                Delivery times start from the moment your payment is verified.
+                            </p>
                         </div>
                     </div>
 
