@@ -67,9 +67,9 @@
 
                 <div class="p-6 bg-slate-100/60 rounded-3xl space-y-4 border border-slate-200/40">
                     <div class="flex items-baseline space-x-3">
-                        <span class="text-4xl font-black text-emerald-600">${{ number_format($product->discounted_price, 2) }}</span>
+                        <span class="text-4xl font-black text-emerald-600">৳{{ number_format($product->discounted_price, 2) }}</span>
                         @if ($product->discount_price)
-                            <span class="text-xl text-slate-400 line-through">${{ number_format($product->price, 2) }}</span>
+                            <span class="text-xl text-slate-400 line-through">৳{{ number_format($product->price, 2) }}</span>
                             <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-xl uppercase">
                                 Save {{ $product->discount_percentage }}%
                             </span>
@@ -97,35 +97,38 @@
                             <div class="flex items-center space-x-4">
                                 <label class="text-sm font-bold text-slate-500">Select Quantity:</label>
                                 <div class="flex items-center border border-slate-200 bg-white rounded-xl overflow-hidden">
-                                    <button type="button" @click="qty = Math.max(1, qty - 1)" class="px-4 py-2 hover:bg-slate-50 text-slate-650 font-bold focus:outline-none">−</button>
+                                    <button type="button" @click="qty = Math.max(1, qty - 1)" class="px-4 py-2 hover:bg-slate-50 text-slate-655 font-bold focus:outline-none">−</button>
                                     <input type="number" name="quantity" :value="qty" readonly class="w-12 text-center border-0 focus:outline-none focus:ring-0 font-bold text-slate-800 text-sm">
-                                    <button type="button" @click="qty = Math.min(maxQty, qty + 1)" class="px-4 py-2 hover:bg-slate-50 text-slate-650 font-bold focus:outline-none">+</button>
+                                    <button type="button" @click="qty = Math.min(maxQty, qty + 1)" class="px-4 py-2 hover:bg-slate-50 text-slate-655 font-bold focus:outline-none">+</button>
                                 </div>
                             </div>
 
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                <button type="submit" class="flex-1 py-4 bg-gradient-to-r from-emerald-600 to-orange-500 hover:from-emerald-700 hover:to-orange-600 text-white font-bold rounded-2xl shadow-xl shadow-emerald-500/5 transition duration-200 flex items-center justify-center">
-                                    <i class="fas fa-shopping-cart mr-2.5"></i> Add to Shopping Cart
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-750 text-white font-bold rounded-2xl transition duration-200 flex items-center justify-center">
+                                    <i class="fas fa-shopping-cart mr-2.5"></i> Add to Cart
                                 </button>
+                                <button type="submit" name="buy_now" value="1" class="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-2xl shadow-xl shadow-orange-500/5 transition duration-200 flex items-center justify-center">
+                                    <i class="fas fa-bolt mr-2.5"></i> Buy Now
+                                </button>
+                            </div>
                         </form>
                     @endif
                     
-                    <form method="POST" action="{{ route('wishlist.add') }}" class="inline-block {{ $product->stock > 0 ? '' : 'w-full' }}">
+                    <form method="POST" action="{{ route('wishlist.add') }}" class="w-full">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <button type="submit" class="w-full py-4 px-6 border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 font-bold rounded-2xl transition flex items-center justify-center gap-2">
                             <i class="far fa-heart"></i> Add to Wishlist
                         </button>
                     </form>
-                    </div>
                 </div>
 
                 <!-- Support features -->
                 <div class="grid grid-cols-3 gap-4 border-t border-slate-100 pt-6 text-center">
                     <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                         <i class="fas fa-truck text-emerald-600 text-lg mb-1"></i>
-                        <h4 class="font-bold text-xs text-slate-800">Free Shipping</h4>
-                        <p class="text-[10px] text-slate-400 mt-0.5">On orders over $50</p>
+                        <h4 class="font-bold text-xs text-slate-800">Shipping</h4>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Based on location</p>
                     </div>
                     <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                         <i class="fas fa-undo text-emerald-600 text-lg mb-1"></i>
@@ -295,18 +298,21 @@
                                     <a href="{{ route('products.show', $relatedProduct->slug) }}">{{ $relatedProduct->name }}</a>
                                 </h3>
                                 <div class="flex items-baseline space-x-2 mt-3">
-                                    <span class="text-lg font-extrabold text-emerald-650">${{ number_format($relatedProduct->discounted_price, 2) }}</span>
+                                    <span class="text-lg font-extrabold text-emerald-650">৳{{ number_format($relatedProduct->discounted_price, 2) }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="px-5 pb-5 pt-1">
                             @if($relatedProduct->stock > 0)
-                                <form method="POST" action="{{ route('cart.add') }}">
+                                <form method="POST" action="{{ route('cart.add') }}" class="flex gap-2">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition duration-200">
+                                    <button type="submit" class="flex-1 py-2 bg-emerald-605 hover:bg-emerald-705 text-white text-[10px] font-bold rounded-xl transition">
                                         Add to Cart
+                                    </button>
+                                    <button type="submit" name="buy_now" value="1" class="flex-1 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[10px] font-bold rounded-xl transition">
+                                        Buy Now
                                     </button>
                                 </form>
                             @else

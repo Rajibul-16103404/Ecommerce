@@ -12,11 +12,11 @@
             <!-- Sales Card -->
             <div class="bg-white border border-slate-150/80 rounded-3xl p-6 shadow-sm flex items-center space-x-5">
                 <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
-                    <i class="fas fa-dollar-sign text-xl"></i>
+                    <span class="text-xl font-bold">৳</span>
                 </div>
                 <div>
                     <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Total Sales</span>
-                    <span class="text-2xl font-black text-slate-900 mt-1 block">${{ number_format($totalSales, 2) }}</span>
+                    <span class="text-2xl font-black text-slate-900 mt-1 block">৳{{ number_format($totalSales, 2) }}</span>
                 </div>
             </div>
 
@@ -106,7 +106,7 @@
                                                 <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-500">Pending</span>
                                             @endif
                                         </td>
-                                        <td class="py-4 text-right font-bold text-slate-800">${{ number_format($order->total_price, 2) }}</td>
+                                        <td class="py-4 text-right font-bold text-slate-800">৳{{ number_format($order->total_price, 2) }}</td>
                                         <td class="py-4 text-right">
                                             <a href="{{ route('admin.orders.show', $order->id) }}" class="px-2.5 py-1 bg-white border border-slate-200 hover:border-emerald-500 hover:text-emerald-600 text-slate-600 text-[10px] font-bold rounded-lg transition inline-block shadow-sm">
                                                 Review

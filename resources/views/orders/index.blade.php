@@ -76,7 +76,7 @@
                                     </td>
                                     
                                     <!-- Total -->
-                                    <td class="py-5 text-right font-bold text-slate-900">${{ number_format($order->total_price, 2) }}</td>
+                                    <td class="py-5 text-right font-bold text-slate-900">৳{{ number_format($order->total_price, 2) }}</td>
                                     
                                     <!-- Action -->
                                     <td class="py-5 text-right">

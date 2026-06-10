@@ -69,38 +69,42 @@
                                     <div class="ml-4">
                                         <h4 class="font-bold text-slate-850 text-sm line-clamp-1">{{ $item->product->name }}</h4>
                                         <p class="text-[10px] text-slate-400 mt-1">
-                                            <span>Price: ${{ number_format($item->price, 2) }}</span>
+                                            <span>Price: ৳{{ number_format($item->price, 2) }}</span>
                                             <span class="mx-1.5">|</span>
                                             <span>Quantity: {{ $item->quantity }}</span>
                                         </p>
                                     </div>
                                 </div>
-                                <span class="font-bold text-slate-850 text-sm">${{ number_format($item->price * $item->quantity, 2) }}</span>
+                                <span class="font-bold text-slate-850 text-sm">৳{{ number_format($item->price * $item->quantity, 2) }}</span>
                             </div>
                         @endforeach
                     </div>
 
+                    @php
+                        $orderSubtotal = $order->orderItems->sum(fn($item) => $item->price * $item->quantity);
+                        $orderShipping = $order->total_price - $orderSubtotal;
+                    @endphp
                     <div class="border-t border-slate-100 pt-5 space-y-3 text-xs font-semibold max-w-xs ml-auto">
                         <div class="flex justify-between text-slate-450">
                             <span>Subtotal</span>
                             <span class="text-slate-700">
-                                ${{ number_format($order->total_price > 50 ? $order->total_price : $order->total_price - 9.99, 2) }}
+                                ৳{{ number_format($orderSubtotal, 2) }}
                             </span>
                         </div>
                         <div class="flex justify-between text-slate-450">
                             <span>Shipping Costs</span>
                             <span class="text-slate-700">
-                                @if($order->total_price > 50)
+                                @if($orderShipping <= 0)
                                     <span class="text-green-600 font-bold">FREE</span>
                                 @else
-                                    $9.99
+                                    ৳{{ number_format($orderShipping, 2) }}
                                 @endif
                             </span>
                         </div>
                         <hr class="border-slate-100">
                         <div class="flex justify-between text-sm font-bold text-slate-900">
                             <span>Grand Total</span>
-                            <span class="text-emerald-605">${{ number_format($order->total_price, 2) }}</span>
+                            <span class="text-emerald-605">৳{{ number_format($order->total_price, 2) }}</span>
                         </div>
                     </div>
                 </div>

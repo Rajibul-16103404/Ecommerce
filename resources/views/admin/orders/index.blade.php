@@ -77,7 +77,7 @@
                                     </td>
 
                                     <!-- Grand Total -->
-                                    <td class="py-4 text-right font-bold text-slate-800">${{ number_format($order->total_price, 2) }}</td>
+                                    <td class="py-4 text-right font-bold text-slate-800">৳{{ number_format($order->total_price, 2) }}</td>
                                     
                                     <!-- Actions -->
                                     <td class="py-4 text-right">

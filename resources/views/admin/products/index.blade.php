@@ -73,12 +73,12 @@
                                     </td>
 
                                     <!-- Price -->
-                                    <td class="py-4 font-bold text-slate-700">${{ number_format($product->price, 2) }}</td>
+                                    <td class="py-4 font-bold text-slate-700">৳{{ number_format($product->price, 2) }}</td>
                                     
                                     <!-- Discount Price -->
                                     <td class="py-4">
                                         @if($product->discount_price)
-                                            <span class="font-bold text-slate-800">${{ number_format($product->discount_price, 2) }}</span>
+                                            <span class="font-bold text-slate-800">৳{{ number_format($product->discount_price, 2) }}</span>
                                         @else
                                             <span class="text-slate-300 font-semibold italic">N/A</span>
                                         @endif

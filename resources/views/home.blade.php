@@ -68,8 +68,8 @@
                                     <p class="text-emerald-150 text-sm mt-1">Premium Health Wearable</p>
                                 </div>
                                 <div class="flex items-baseline space-x-2">
-                                    <span class="text-3xl font-extrabold">$249.99</span>
-                                    <span class="text-sm text-emerald-200 line-through">$299.99</span>
+                                    <span class="text-3xl font-extrabold">৳24,999.00</span>
+                                    <span class="text-sm text-emerald-200 line-through">৳29,999.00</span>
                                 </div>
                             </div>
                             <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600" alt="Smartwatch" 
@@ -121,8 +121,8 @@
                                     <p class="text-orange-100 text-sm mt-1">Handcrafted Premium Watch</p>
                                 </div>
                                 <div class="flex items-baseline space-x-2">
-                                    <span class="text-3xl font-extrabold">$349.00</span>
-                                    <span class="text-sm text-orange-250 line-through">$450.00</span>
+                                    <span class="text-3xl font-extrabold">৳34,900.00</span>
+                                    <span class="text-sm text-orange-250 line-through">৳45,000.00</span>
                                 </div>
                             </div>
                             <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600" alt="Premium Watch" 
@@ -174,8 +174,8 @@
                                     <p class="text-emerald-100 text-sm mt-1">Noise Cancelling Wireless</p>
                                 </div>
                                 <div class="flex items-baseline space-x-2">
-                                    <span class="text-3xl font-extrabold">$189.99</span>
-                                    <span class="text-sm text-emerald-250 line-through">$249.99</span>
+                                    <span class="text-3xl font-extrabold">৳18,999.00</span>
+                                    <span class="text-sm text-emerald-250 line-through">৳24,999.00</span>
                                 </div>
                             </div>
                             <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600" alt="Audio Headphones" 
@@ -455,8 +455,8 @@
                     <i class="fas fa-truck text-2xl animate-pulse"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-lg text-slate-900">Fast Shipping</h3>
-                    <p class="text-slate-500 text-sm mt-1">Free shipping on orders over $50. Prompt and secured delivery right to your door.</p>
+                    <h3 class="font-bold text-lg text-slate-900">Shipping</h3>
+                    <p class="text-slate-500 text-sm mt-1">Flexible shipping fee based on your delivery location. Prompt and secured delivery right to your door.</p>
                 </div>
             </div>
             <div class="bg-white rounded-2xl p-8 border border-slate-100 flex items-start space-x-5 shadow-sm hover-float fade-in-up">

@@ -60,7 +60,7 @@
                                 <!-- Unit Price -->
                                 <div class="col-span-4 sm:col-span-2 text-left sm:text-center">
                                     <span class="sm:hidden text-xs text-slate-400 font-bold uppercase block">Price</span>
-                                    <span class="font-bold text-slate-800 text-sm">${{ number_format($item->product->discounted_price, 2) }}</span>
+                                    <span class="font-bold text-slate-800 text-sm">৳{{ number_format($item->product->discounted_price, 2) }}</span>
                                 </div>
 
                                 <!-- Quantity adjuster -->
@@ -80,7 +80,7 @@
                                 <!-- Total Item Price -->
                                 <div class="col-span-4 sm:col-span-2 text-right">
                                     <span class="sm:hidden text-xs text-slate-400 font-bold uppercase block">Total</span>
-                                    <span class="font-bold text-emerald-650 text-base">${{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
+                                    <span class="font-bold text-emerald-650 text-base">৳{{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
                                 </div>
 
                             </div>
@@ -95,7 +95,7 @@
                     <div class="space-y-4 text-sm font-medium">
                         <div class="flex justify-between text-slate-500">
                             <span>Subtotal</span>
-                            <span class="text-slate-800">${{ number_format($subtotal, 2) }}</span>
+                            <span class="text-slate-800">৳{{ number_format($subtotal, 2) }}</span>
                         </div>
                         <div class="flex justify-between text-slate-500">
                             <span>Shipping Costs</span>
@@ -103,19 +103,14 @@
                                 @if($shipping == 0)
                                     <span class="text-green-600 font-bold">FREE</span>
                                 @else
-                                    ${{ number_format($shipping, 2) }}
+                                    ৳{{ number_format($shipping, 2) }}
                                 @endif
                             </span>
                         </div>
-                        @if($shipping > 0)
-                            <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100/50 text-xs text-emerald-700 leading-normal">
-                                <i class="fas fa-circle-info mr-1.5 text-emerald-600"></i> Add <span class="font-bold">${{ number_format(50 - $subtotal, 2) }}</span> more to unlock <span class="font-bold">FREE SHIPPING</span>!
-                            </div>
-                        @endif
                         <hr class="border-slate-100">
                         <div class="flex justify-between text-base font-bold text-slate-900">
                             <span>Estimated Total</span>
-                            <span class="text-emerald-600">${{ number_format($total, 2) }}</span>
+                            <span class="text-emerald-600">৳{{ number_format($total, 2) }}</span>
                         </div>
                     </div>
 

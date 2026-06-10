@@ -51,7 +51,7 @@
 
                 <!-- Price -->
                 <div>
-                    <label for="price" class="block text-xs font-bold uppercase text-slate-400 mb-2">Price ($)</label>
+                    <label for="price" class="block text-xs font-bold uppercase text-slate-400 mb-2">Price (৳)</label>
                     <input type="number" id="price" name="price" value="{{ old('price', $product->price) }}" step="0.01" min="0" required
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-sm focus:outline-none text-slate-800">
                     @error('price') <span class="text-xs text-rose-500 mt-1 block font-semibold">{{ $message }}</span> @enderror
@@ -59,7 +59,7 @@
 
                 <!-- Discount Price -->
                 <div>
-                    <label for="discount_price" class="block text-xs font-bold uppercase text-slate-400 mb-2">Discount Price ($) <span class="text-[9px] text-slate-400 lowercase">(optional)</span></label>
+                    <label for="discount_price" class="block text-xs font-bold uppercase text-slate-400 mb-2">Discount Price (৳) <span class="text-[9px] text-slate-400 lowercase">(optional)</span></label>
                     <input type="number" id="discount_price" name="discount_price" value="{{ old('discount_price', $product->discount_price) }}" step="0.01" min="0"
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-sm focus:outline-none text-slate-800">
                     @error('discount_price') <span class="text-xs text-rose-500 mt-1 block font-semibold">{{ $message }}</span> @enderror
