@@ -56,10 +56,10 @@
                 <!-- Price -->
                 <div class="mb-4">
                     @if($product->discount_price)
-                        <span class="text-2xl font-bold text-blue-600">${{ number_format($product->discount_price, 2) }}</span>
-                        <span class="text-sm text-gray-400 line-through ml-2">${{ number_format($product->price, 2) }}</span>
+                        <span class="text-2xl font-bold text-blue-600">৳{{ number_format($product->discount_price, 2) }}</span>
+                        <span class="text-sm text-gray-400 line-through ml-2">৳{{ number_format($product->price, 2) }}</span>
                     @else
-                        <span class="text-2xl font-bold text-gray-900">${{ number_format($product->price, 2) }}</span>
+                        <span class="text-2xl font-bold text-gray-900">৳{{ number_format($product->price, 2) }}</span>
                     @endif
                 </div>
 

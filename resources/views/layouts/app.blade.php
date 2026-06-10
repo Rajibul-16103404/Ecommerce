@@ -48,9 +48,28 @@
 <body class="font-sans antialiased bg-slate-50 text-slate-800 flex flex-col min-h-screen">
 
     @php
-        $cartCount = auth()->check() ? \App\Models\CartItem::where('user_id', auth()->id())->sum('quantity') : 0;
-        $wishlistCount = auth()->check() ? \App\Models\Wishlist::where('user_id', auth()->id())->count() : 0;
-        $sidebarCartItems = auth()->check() ? \App\Models\CartItem::with('product')->where('user_id', auth()->id())->get() : collect();
+        if (auth()->check()) {
+            $cartCount = \App\Models\CartItem::where('user_id', auth()->id())->sum('quantity');
+            $wishlistCount = \App\Models\Wishlist::where('user_id', auth()->id())->count();
+            $sidebarCartItems = \App\Models\CartItem::with('product.category')->where('user_id', auth()->id())->get();
+        } else {
+            $sessionCart = session('cart', []);
+            $cartCount = array_sum($sessionCart);
+            $wishlistCount = 0;
+            $productIds = array_keys($sessionCart);
+            if (!empty($productIds)) {
+                $products = \App\Models\Product::with('category')->whereIn('id', $productIds)->get();
+                $sidebarCartItems = $products->map(function ($product) use ($sessionCart) {
+                    $item = new \App\Models\CartItem();
+                    $item->product_id = $product->id;
+                    $item->quantity = $sessionCart[$product->id] ?? 1;
+                    $item->setRelation('product', $product);
+                    return $item;
+                });
+            } else {
+                $sidebarCartItems = collect();
+            }
+        }
         $sidebarSubtotal = $sidebarCartItems->sum(fn($item) => $item->product->discounted_price * $item->quantity);
     @endphp
 
@@ -106,7 +125,7 @@
 
                         <!-- Shopping Cart Toggle -->
                         <button @click="cartOpen = true" class="relative p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-emerald-650 transition focus:outline-none">
-                            <i class="far fa-shopping-cart text-lg"></i>
+                            <i class="fas fa-shopping-cart text-lg"></i>
                             @if($cartCount > 0)
                                 <span class="absolute -top-1.5 -right-1.5 bg-emerald-650 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center ring-2 ring-white">
                                     {{ $cartCount }}
@@ -254,7 +273,7 @@
                         <div class="flex-1 overflow-y-auto px-6 py-6 sm:px-6">
                             <div class="flex items-start justify-between border-b border-slate-100 pb-5">
                                 <h2 class="text-xl font-bold text-slate-900 flex items-center">
-                                    <i class="far fa-shopping-bag mr-2.5 text-emerald-600"></i> Shopping Cart
+                                    <i class="fas fa-shopping-bag mr-2.5 text-emerald-600"></i> Shopping Cart
                                 </h2>
                                 <div class="ml-3 flex h-7 items-center">
                                     <button type="button" class="relative -m-2 p-2 text-slate-400 hover:text-slate-500 focus:outline-none" @click="cartOpen = false">
@@ -291,7 +310,7 @@
                                                                 <h3 class="line-clamp-1">
                                                                     <a href="{{ route('products.show', $item->product->slug) }}">{{ $item->product->name }}</a>
                                                                 </h3>
-                                                                <p class="ml-4">${{ number_format($item->product->discounted_price, 2) }}</p>
+                                                                <p class="ml-4">৳{{ number_format($item->product->discounted_price, 2) }}</p>
                                                             </div>
                                                             <p class="mt-1 text-xs text-slate-400">{{ $item->product->category->name }}</p>
                                                         </div>
@@ -328,7 +347,7 @@
                             <div class="border-t border-slate-100 px-6 py-6 sm:px-6 bg-slate-50">
                                 <div class="flex justify-between text-base font-bold text-slate-900">
                                     <p>Subtotal</p>
-                                    <p>${{ number_format($sidebarSubtotal, 2) }}</p>
+                                    <p>৳{{ number_format($sidebarSubtotal, 2) }}</p>
                                 </div>
                                 <p class="mt-1.5 text-xs text-slate-400">Shipping and taxes calculated at checkout.</p>
                                 <div class="mt-6 space-y-3">

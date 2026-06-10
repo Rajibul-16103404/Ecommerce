@@ -39,33 +39,57 @@
                 <!-- Nav Menu links -->
                 <nav class="px-4 space-y-2.5">
                     <!-- Dashboard -->
-                    <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-3 rounded-xl transition font-medium text-sm text-slate-600 hover:bg-slate-50 hover:text-emerald-600 {{ request()->routeIs('admin.dashboard') ? 'bg-emerald-50 text-emerald-600 border-l-4 border-emerald-500' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}" class="relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/30 text-emerald-700 shadow-sm shadow-emerald-900/5 translate-x-1 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
                         <i class="fas fa-tachometer-alt w-6"></i>
                         <span x-show="sidebarOpen">Dashboard</span>
+                        @if(request()->routeIs('admin.dashboard'))
+                            <span x-show="sidebarOpen" class="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-orange-500 auto-pulse animate-pulse"></span>
+                        @endif
                     </a>
 
                     <!-- Products -->
-                    <a href="{{ route('admin.products.index') }}" class="flex items-center px-4 py-3 rounded-xl transition font-medium text-sm text-slate-600 hover:bg-slate-50 hover:text-emerald-600 {{ request()->routeIs('admin.products.*') ? 'bg-emerald-50 text-emerald-600 border-l-4 border-emerald-500' : '' }}">
+                    <a href="{{ route('admin.products.index') }}" class="relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm {{ request()->routeIs('admin.products.*') ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/30 text-emerald-700 shadow-sm shadow-emerald-900/5 translate-x-1 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
                         <i class="fas fa-box w-6"></i>
                         <span x-show="sidebarOpen">Products CRUD</span>
+                        @if(request()->routeIs('admin.products.*'))
+                            <span x-show="sidebarOpen" class="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-orange-500 auto-pulse animate-pulse"></span>
+                        @endif
                     </a>
 
                     <!-- Categories -->
-                    <a href="{{ route('admin.categories.index') }}" class="flex items-center px-4 py-3 rounded-xl transition font-medium text-sm text-slate-600 hover:bg-slate-50 hover:text-emerald-600 {{ request()->routeIs('admin.categories.*') ? 'bg-emerald-50 text-emerald-600 border-l-4 border-emerald-500' : '' }}">
+                    <a href="{{ route('admin.categories.index') }}" class="relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm {{ request()->routeIs('admin.categories.*') ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/30 text-emerald-700 shadow-sm shadow-emerald-900/5 translate-x-1 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
                         <i class="fas fa-folder w-6"></i>
                         <span x-show="sidebarOpen">Categories</span>
+                        @if(request()->routeIs('admin.categories.*'))
+                            <span x-show="sidebarOpen" class="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-orange-500 auto-pulse animate-pulse"></span>
+                        @endif
                     </a>
 
                     <!-- Orders -->
-                    <a href="{{ route('admin.orders.index') }}" class="flex items-center px-4 py-3 rounded-xl transition font-medium text-sm text-slate-600 hover:bg-slate-50 hover:text-emerald-600 {{ request()->routeIs('admin.orders.*') ? 'bg-emerald-50 text-emerald-600 border-l-4 border-emerald-500' : '' }}">
+                    <a href="{{ route('admin.orders.index') }}" class="relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm {{ request()->routeIs('admin.orders.*') ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/30 text-emerald-700 shadow-sm shadow-emerald-900/5 translate-x-1 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
                         <i class="fas fa-clipboard-list w-6"></i>
                         <span x-show="sidebarOpen">Verify Orders</span>
+                        @if(request()->routeIs('admin.orders.*'))
+                            <span x-show="sidebarOpen" class="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-orange-500 auto-pulse animate-pulse"></span>
+                        @endif
                     </a>
 
                     <!-- Vendors -->
-                    <a href="{{ route('admin.vendors.index') }}" class="flex items-center px-4 py-3 rounded-xl transition font-medium text-sm text-slate-600 hover:bg-slate-50 hover:text-emerald-600 {{ request()->routeIs('admin.vendors.*') ? 'bg-emerald-50 text-emerald-600 border-l-4 border-emerald-500' : '' }}">
+                    <a href="{{ route('admin.vendors.index') }}" class="relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm {{ request()->routeIs('admin.vendors.*') ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/30 text-emerald-700 shadow-sm shadow-emerald-900/5 translate-x-1 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
                         <i class="fas fa-store w-6"></i>
                         <span x-show="sidebarOpen">Verify Vendors</span>
+                        @if(request()->routeIs('admin.vendors.*'))
+                            <span x-show="sidebarOpen" class="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-orange-500 auto-pulse animate-pulse"></span>
+                        @endif
+                    </a>
+
+                    <!-- Shipping Fees -->
+                    <a href="{{ route('admin.shipping.index') }}" class="relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm {{ request()->routeIs('admin.shipping.*') ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/30 text-emerald-700 shadow-sm shadow-emerald-900/5 translate-x-1 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+                        <i class="fas fa-truck w-6"></i>
+                        <span x-show="sidebarOpen">Shipping Fees</span>
+                        @if(request()->routeIs('admin.shipping.*'))
+                            <span x-show="sidebarOpen" class="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-orange-500 auto-pulse animate-pulse"></span>
+                        @endif
                     </a>
 
                     <!-- Spacer -->

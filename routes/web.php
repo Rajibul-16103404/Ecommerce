@@ -32,14 +32,19 @@ Route::post('/admin/login', [AuthController::class, 'adminLogin']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+// Cart routes (public)
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::put('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
+
+// Checkout & Order Placement (public)
+Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
 // Customer Panel (authenticated)
 Route::middleware('auth')->group(function () {
-    // Cart
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-    Route::put('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
-
     // Wishlist
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
@@ -50,11 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
-    // Checkout & Orders
-    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    // Orders index
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
 
 // Admin Panel (authenticated & role=admin)
@@ -83,4 +85,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Vendors management
     Route::get('/vendors', [AdminController::class, 'vendorsIndex'])->name('vendors.index');
     Route::put('/vendors/{vendor}/verify', [AdminController::class, 'vendorsToggleVerify'])->name('vendors.toggle-verify');
+
+    // Shipping Locations CRUD
+    Route::get('/shipping-locations', [AdminController::class, 'shippingIndex'])->name('shipping.index');
+    Route::post('/shipping-locations', [AdminController::class, 'shippingStore'])->name('shipping.store');
+    Route::delete('/shipping-locations/{location}', [AdminController::class, 'shippingDestroy'])->name('shipping.destroy');
 });

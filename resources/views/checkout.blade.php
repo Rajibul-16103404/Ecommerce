@@ -6,7 +6,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 class="text-3xl font-black text-slate-900 tracking-tight mb-8">Checkout</h1>
 
-        <form method="POST" action="{{ route('orders.store') }}" x-data="{ paymentMethod: 'cod' }">
+        <form method="POST" action="{{ route('orders.store') }}" x-data="{ paymentMethod: 'cod', createAccount: false, shippingFee: {{ $shipping }}, subtotal: {{ $subtotal }} }">
             @csrf
             
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -14,10 +14,57 @@
                 <!-- Billing & Shipping Form -->
                 <div class="lg:col-span-8 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8 space-y-8">
                     
-                    <!-- Section 1: Shipping Details -->
+                    @guest
+                    <!-- Section: Account Details (Guest only) -->
                     <div class="space-y-5">
                         <h3 class="font-extrabold text-slate-800 text-lg border-b border-slate-100 pb-3">
                             <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-650 text-xs font-black mr-2">1</span>
+                            Account Information
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="name" class="block text-xs font-bold uppercase text-slate-400 mb-2">Full Name</label>
+                                <input type="text" id="name" name="name" value="{{ old('name') }}" required
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
+                                    placeholder="e.g. John Doe">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-xs font-bold uppercase text-slate-400 mb-2">Email Address</label>
+                                <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
+                                    placeholder="john@example.com">
+                            </div>
+                            
+                            <div class="sm:col-span-2">
+                                <label class="inline-flex items-center mt-2 cursor-pointer">
+                                    <input type="checkbox" name="create_account" value="1" x-model="createAccount" class="rounded border-slate-300 text-emerald-650 focus:ring-emerald-500 w-4 h-4">
+                                    <span class="ml-2.5 text-sm font-bold text-slate-700">Create an account?</span>
+                                </label>
+                            </div>
+
+                            <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4" x-show="createAccount" x-transition style="display: none;">
+                                <div>
+                                    <label for="password" class="block text-xs font-bold uppercase text-slate-400 mb-2">Password</label>
+                                    <input type="password" id="password" name="password"
+                                        class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
+                                        placeholder="••••••••">
+                                </div>
+                                <div>
+                                    <label for="password_confirmation" class="block text-xs font-bold uppercase text-slate-400 mb-2">Confirm Password</label>
+                                    <input type="password" id="password_confirmation" name="password_confirmation"
+                                        class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
+                                        placeholder="••••••••">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endguest
+
+                    <!-- Section: Shipping Details -->
+                    <div class="space-y-5">
+                        <h3 class="font-extrabold text-slate-800 text-lg border-b border-slate-100 pb-3">
+                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-650 text-xs font-black mr-2">{{ auth()->check() ? '1' : '2' }}</span>
                             Shipping Information
                         </h3>
 
@@ -29,10 +76,16 @@
                                     placeholder="House number, Street name, Apartment, etc.">
                             </div>
                             <div>
-                                <label for="shipping_city" class="block text-xs font-bold uppercase text-slate-400 mb-2">City</label>
-                                <input type="text" id="shipping_city" name="shipping_city" value="{{ old('shipping_city') }}" required
-                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none placeholder-slate-350"
-                                    placeholder="e.g. Dhaka, Chittagong">
+                                <label for="shipping_city" class="block text-xs font-bold uppercase text-slate-400 mb-2">City / Location</label>
+                                <select id="shipping_city" name="shipping_city" required 
+                                    class="w-full px-4 py-2.5 bg-slate-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 text-sm focus:outline-none"
+                                    x-on:change="shippingFee = parseFloat($event.target.selectedOptions[0].getAttribute('data-fee'))">
+                                    @foreach($shippingLocations as $loc)
+                                        <option value="{{ $loc->name }}" data-fee="{{ $loc->fee }}" {{ old('shipping_city') == $loc->name ? 'selected' : '' }}>
+                                            {{ $loc->name }} (৳{{ number_format($loc->fee, 2) }})
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
                                 <label for="shipping_zip" class="block text-xs font-bold uppercase text-slate-400 mb-2">ZIP / Postal Code</label>
@@ -49,10 +102,10 @@
                         </div>
                     </div>
 
-                    <!-- Section 2: Payment Methods (Manual verification) -->
+                    <!-- Section: Payment Methods -->
                     <div class="space-y-5">
                         <h3 class="font-extrabold text-slate-800 text-lg border-b border-slate-100 pb-3">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-650 text-xs font-black mr-2">2</span>
+                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-650 text-xs font-black mr-2">{{ auth()->check() ? '2' : '3' }}</span>
                             Select Payment Method
                         </h3>
 
@@ -112,7 +165,7 @@
                                 <template x-if="['bkash', 'nagad', 'rocket'].includes(paymentMethod)">
                                     <div class="text-xs text-slate-500 leading-normal space-y-1">
                                         <p>1. Open your Mobile Wallet and navigate to Send Money / Merchant Pay.</p>
-                                        <p>2. Send the exact grand total amount <span class="font-bold text-slate-800">${{ number_format($total, 2) }}</span> to our Wallet Number: <span class="font-bold text-emerald-650">+8801777777777</span>.</p>
+                                        <p>2. Send the exact grand total amount <span class="font-bold text-slate-800">৳<span x-text="(subtotal + shippingFee).toFixed(2)"></span></span> to our Wallet Number: <span class="font-bold text-emerald-650">+8801777777777</span>.</p>
                                         <p>3. Input your Transaction details below once the transaction completes successfully.</p>
                                     </div>
                                 </template>
@@ -120,7 +173,7 @@
                                 <!-- Bank instructions -->
                                 <template x-if="paymentMethod === 'bank_transfer'">
                                     <div class="text-xs text-slate-500 leading-normal space-y-1">
-                                        <p>1. Transfer the exact amount <span class="font-bold text-slate-800">${{ number_format($total, 2) }}</span> to our Bank Account:</p>
+                                        <p>1. Transfer the exact amount <span class="font-bold text-slate-800">৳<span x-text="(subtotal + shippingFee).toFixed(2)"></span></span> to our Bank Account:</p>
                                         <p class="pl-4 font-bold text-slate-700">Bank Name: Demo Premium Bank Ltd</p>
                                         <p class="pl-4 font-bold text-slate-700">Account Name: Shopee Ltd</p>
                                         <p class="pl-4 font-bold text-slate-700">Account Number: 1234-5678-9012</p>
@@ -164,7 +217,7 @@
                                         </span>
                                         <span class="font-bold text-slate-800 line-clamp-1 max-w-[150px]">{{ $item->product->name }}</span>
                                     </div>
-                                    <span class="font-bold text-slate-700">${{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
+                                    <span class="font-bold text-slate-700">৳{{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
                                 </li>
                             @endforeach
                         </ul>
@@ -172,22 +225,18 @@
                         <div class="space-y-3 pt-4 border-t border-slate-100 text-sm font-medium">
                             <div class="flex justify-between text-slate-500">
                                 <span>Subtotal</span>
-                                <span class="text-slate-800">${{ number_format($subtotal, 2) }}</span>
+                                <span class="text-slate-800">৳{{ number_format($subtotal, 2) }}</span>
                             </div>
                             <div class="flex justify-between text-slate-500">
                                 <span>Shipping costs</span>
                                 <span class="text-slate-800">
-                                    @if($shipping == 0)
-                                        <span class="text-green-600 font-bold">FREE</span>
-                                    @else
-                                        ${{ number_format($shipping, 2) }}
-                                    @endif
+                                    ৳<span x-text="shippingFee.toFixed(2)"></span>
                                 </span>
                             </div>
                             <hr class="border-slate-100">
                             <div class="flex justify-between text-base font-bold text-slate-900">
                                 <span>Total Price</span>
-                                <span>${{ number_format($total, 2) }}</span>
+                                <span class="text-emerald-600">৳<span x-text="(subtotal + shippingFee).toFixed(2)"></span></span>
                             </div>
                         </div>
                     </div>

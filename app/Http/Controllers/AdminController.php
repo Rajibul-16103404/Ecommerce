@@ -234,4 +234,33 @@ class AdminController extends Controller
 
         return back()->with('success', 'Vendor verification status toggled.');
     }
+
+    public function shippingIndex()
+    {
+        $locations = \App\Models\ShippingLocation::orderBy('name', 'asc')->paginate(10);
+
+        return view('admin.shipping.index', compact('locations'));
+    }
+
+    public function shippingStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:shipping_locations,name',
+            'fee' => 'required|numeric|min:0',
+        ]);
+
+        \App\Models\ShippingLocation::create([
+            'name' => $request->name,
+            'fee' => $request->fee,
+        ]);
+
+        return redirect()->route('admin.shipping.index')->with('success', 'Shipping location added successfully.');
+    }
+
+    public function shippingDestroy(\App\Models\ShippingLocation $location)
+    {
+        $location->delete();
+
+        return redirect()->route('admin.shipping.index')->with('success', 'Shipping location removed successfully.');
+    }
 }

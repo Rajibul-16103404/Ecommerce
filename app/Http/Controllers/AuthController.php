@@ -30,6 +30,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
+            $this->mergeSessionCart();
 
             return $this->redirectBasedOnRole($user)->with('success', 'Logged in successfully!');
         }
@@ -64,8 +65,34 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
+        $this->mergeSessionCart();
 
         return redirect()->route('home')->with('success', 'Account created successfully! Welcome to Shopee.');
+    }
+
+    private function mergeSessionCart()
+    {
+        $sessionCart = session()->pull('cart', []);
+        if (empty($sessionCart)) {
+            return;
+        }
+
+        $userId = Auth::id();
+        foreach ($sessionCart as $productId => $quantity) {
+            $cartItem = \App\Models\CartItem::where('user_id', $userId)
+                ->where('product_id', $productId)
+                ->first();
+
+            if ($cartItem) {
+                $cartItem->update(['quantity' => $cartItem->quantity + $quantity]);
+            } else {
+                \App\Models\CartItem::create([
+                    'user_id' => $userId,
+                    'product_id' => $productId,
+                    'quantity' => $quantity,
+                ]);
+            }
+        }
     }
 
     public function logout(Request $request)

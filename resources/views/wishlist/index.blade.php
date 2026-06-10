@@ -58,23 +58,26 @@
                                 </h3>
 
                                 <div class="flex items-baseline space-x-2 mt-3">
-                                    <span class="text-lg font-extrabold text-emerald-600">${{ number_format($product->discounted_price, 2) }}</span>
+                                    <span class="text-lg font-extrabold text-emerald-600">৳{{ number_format($product->discounted_price, 2) }}</span>
                                     @if ($product->discount_price)
-                                        <span class="text-xs text-slate-400 line-through">${{ number_format($product->price, 2) }}</span>
+                                        <span class="text-xs text-slate-400 line-through">৳{{ number_format($product->price, 2) }}</span>
                                     @endif
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Add to Cart -->
+                        <!-- Add to Cart & Buy Now -->
                         <div class="px-5 pb-5 pt-1">
                             @if($product->stock > 0)
-                                <form method="POST" action="{{ route('cart.add') }}">
+                                <form method="POST" action="{{ route('cart.add') }}" class="flex gap-2">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="w-full py-2.5 bg-slate-900 hover:bg-emerald-650 text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5">
-                                        <i class="fas fa-shopping-cart text-[10px]"></i> Add to Cart
+                                    <button type="submit" class="flex-1 py-2.5 bg-slate-900 hover:bg-emerald-650 text-white text-[10px] font-bold rounded-xl transition flex items-center justify-center">
+                                        Add to Cart
+                                    </button>
+                                    <button type="submit" name="buy_now" value="1" class="flex-1 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[10px] font-bold rounded-xl transition flex items-center justify-center">
+                                        Buy Now
                                     </button>
                                 </form>
                             @else

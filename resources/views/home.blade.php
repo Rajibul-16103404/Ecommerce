@@ -299,23 +299,26 @@
 
                                 <!-- Price -->
                                 <div class="flex items-baseline space-x-2 mt-4">
-                                    <span class="text-2xl font-extrabold text-emerald-600">${{ number_format($product->discounted_price, 2) }}</span>
+                                    <span class="text-2xl font-extrabold text-emerald-600">৳{{ number_format($product->discounted_price, 2) }}</span>
                                     @if ($product->discount_price)
-                                        <span class="text-sm text-slate-400 line-through">${{ number_format($product->price, 2) }}</span>
+                                        <span class="text-sm text-slate-400 line-through">৳{{ number_format($product->price, 2) }}</span>
                                     @endif
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Add to Cart -->
+                        <!-- Add to Cart & Buy Now -->
                         <div class="px-6 pb-6 pt-2">
                             @if($product->stock > 0)
-                                <form method="POST" action="{{ route('cart.add') }}">
+                                <form method="POST" action="{{ route('cart.add') }}" class="flex gap-2">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition duration-200 flex items-center justify-center shadow-md hover:shadow-emerald-50">
-                                        <i class="fas fa-shopping-cart mr-2 text-xs"></i> Add to Cart
+                                    <button type="submit" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition duration-200 flex items-center justify-center shadow-md hover:shadow-emerald-50">
+                                        Add to Cart
+                                    </button>
+                                    <button type="submit" name="buy_now" value="1" class="flex-1 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl text-xs transition duration-200 flex items-center justify-center shadow-sm">
+                                        Buy Now
                                     </button>
                                 </form>
                             @else
@@ -410,23 +413,26 @@
 
                                 <!-- Price -->
                                 <div class="flex items-baseline space-x-2 mt-4">
-                                    <span class="text-2xl font-extrabold text-emerald-600">${{ number_format($product->discounted_price, 2) }}</span>
+                                    <span class="text-2xl font-extrabold text-emerald-600">৳{{ number_format($product->discounted_price, 2) }}</span>
                                     @if ($product->discount_price)
-                                        <span class="text-sm text-slate-400 line-through">${{ number_format($product->price, 2) }}</span>
+                                        <span class="text-sm text-slate-400 line-through">৳{{ number_format($product->price, 2) }}</span>
                                     @endif
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Add to Cart -->
+                        <!-- Add to Cart & Buy Now -->
                         <div class="px-6 pb-6 pt-2">
                             @if($product->stock > 0)
-                                <form method="POST" action="{{ route('cart.add') }}">
+                                <form method="POST" action="{{ route('cart.add') }}" class="flex gap-2">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition duration-200 flex items-center justify-center shadow-md hover:shadow-emerald-50">
-                                        <i class="fas fa-shopping-cart mr-2 text-xs"></i> Add to Cart
+                                    <button type="submit" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition duration-200 flex items-center justify-center shadow-md hover:shadow-emerald-50">
+                                        Add to Cart
+                                    </button>
+                                    <button type="submit" name="buy_now" value="1" class="flex-1 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl text-xs transition duration-200 flex items-center justify-center shadow-sm">
+                                        Buy Now
                                     </button>
                                 </form>
                             @else
